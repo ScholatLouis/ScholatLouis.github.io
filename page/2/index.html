@@ -54,7 +54,7 @@
 <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Louis">
-<meta property="og:url" content="http://hiLouis.github.io/archives/2015/index.html">
+<meta property="og:url" content="http://hiLouis.github.io/page/2/index.html">
 <meta property="og:site_name" content="Louis">
 <meta property="og:description">
 <meta name="twitter:card" content="summary">
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title> 歸檔 | Louis </title>
+  <title> Louis </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-hk">
@@ -92,7 +92,9 @@
 
 
 
-  <div class="container one-column  page-archive ">
+  <div class="container one-column 
+   page-home 
+">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -169,392 +171,150 @@
       <div class="main-inner">
         <div id="content" class="content">
           
-
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共有 11 篇文章。 繼續努力。
-    </span>
+  <section id="posts" class="posts-expand">
 
     
 
-      
+    
+    
       
       
 
       
+    
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2015">2015</h2>
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/11/23/DOM事件系列-1/" itemprop="url">
+                  DOM事件系列[1]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-11-23T08:30:35+08:00" content="2015-11-23">
+              2015-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
         </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/12/02/Array数组系列-1/" itemprop="url">
-              
-                <span itemprop="name">Array数组[1]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-12-02T16:39:53+08:00"
-              content="2015-12-02" >
-          12-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+      </header>
     
 
-      
-      
-      
+
+    <div class="post-body">
 
       
       
 
       
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
         
-            <a class="post-title-link" href="/2015/12/02/Array数组系列-2/" itemprop="url">
-              
-                <span itemprop="name">Array数组[2]</span>
-              
-            </a>
+          <span itemprop="articleBody">
+            
+              <h1 id="[1]DOM_Level_0_与_DOM_Level_2事件">[1]DOM Level 0 与 DOM Level 2事件</h1><ol>
+<li><p>DOM Level 0事件</p>
+<ul>
+<li><p>一开始浏览器处理事件的方式是将事件处理程序被设置为js代码串，且作为html的属性值（DOM Level 0的事件直接绑定到HTML代码中），如：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">onclick</span>=<span class="value">"alert('event inline');"</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DOM Level 0对某一元素不能同时绑定同一事件，因为后面的事件会覆盖前面同样的事件绑定</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">onclick</span>=<span class="value">"alert('event inline');"</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">```	</span><br><span class="line">```JavaScript</span><br><span class="line">var test = document.getElementById("test");</span><br><span class="line">test.onclick = function()&#123;</span><br><span class="line">	alert("event first");</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">test.onclick = function()&#123;</span><br><span class="line">	alert("event second");</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://jsfiddle.net/Louis_Tsang/8sb5cys2/" title="Example" target="_blank" rel="external">Example点击查看</a><br>最后弹框出现的只有event second，event first绑定的事件被覆盖，inline的事件也被覆盖</p>
+</li>
+<li>DOM Level 0绑定事件的两种方法如上：<br>1.将事件作为html的属性直接写在html代码中。<br>2.获取元素，在通过元素的.onEvent = function(){}进行绑定。  </li>
+</ul>
+</li>
+<li><p>DOM Level 2事件</p>
+<ul>
+<li>DOM Level 2规定了事件的传播方式，主要有三个阶段，分别是捕获Capturing Phase、目标Target Phase和冒泡Bubble Phase。这个知识点详细内容请看目录[2]<a href="">事件传播与冒泡</a></li>
+<li>DOM Level 2的事件则是通过addEventListener(IE浏览器使用attachEvent)函数对元素设置监听函数。  <ul>
+<li>addEventListener(String, function(event), Boolean)函数介绍  <ol>
+<li>第一个参数String，指的是事件类型。如绑定点击事件则是click，需要注意的是没有on前缀，不是onclick  </li>
+<li>第二个参数是事件处理函数，JS在调用的时候会传入事件event，关于事件event的详细内容请看目录[3]<a href="">Event对象</a>  </li>
+<li>第三个参数是一个boolean值，取true或者false。当为true的时候则表示在事件Capturing Phase阶段执行处理函数；为false的时候则表示在事件Bubble Phase阶段执行处理函数。  </li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>通过DOM Level 2事件绑定，同个元素可以绑定多个相同事件，各个事件根据绑定的顺序依次执行。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">onclick</span>=<span class="value">"alert('event inline');"</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>);</span><br><span class="line">test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="string">"event first"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="string">"event second"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="http://jsfiddle.net/Louis_Tsang/t2LsqmLx/" title="Example" target="_blank" rel="external">Example点击查看</a></p>
+</li>
+</ul>
+</li>
+<li>DOM Level 0 与 DOM Level 2的比较  <ol>
+<li>事件的绑定方式不同  </li>
+<li>DOM Level 2将事件分为三个阶段，而DOM Level 0则没有，默认事件在相当于DOM Level 2事件Bubble Phase处理(即如果用0级DOM的2个方法赋值的事件监听函数不能在capturing阶段捕捉到事件)。  </li>
+<li>DOM Level 0事件浏览器支持比较统一，而如果使用DOM Level 2则在IE和非IE情况下需要做区分。具体的处理方法请看目录[5]<a href="">跨浏览器中事件</a> </li>
+</ol>
+</li>
+</ol>
+
+            
+          </span>
         
-      </h1>
+      
+    </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-12-02T16:39:53+08:00"
-              content="2015-12-02" >
-          12-02
-        </time>
-      </div>
+    <footer class="post-footer">
+      
 
-    </header>
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/12/02/Array数组系列-3/" itemprop="url">
-              
-                <span itemprop="name">Array数组[3]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-12-02T16:39:53+08:00"
-              content="2015-12-02" >
-          12-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/12/02/Array数组系列-4/" itemprop="url">
-              
-                <span itemprop="name">Array数组[4]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-12-02T16:39:53+08:00"
-              content="2015-12-02" >
-          12-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/12/02/原型Prototyp-1/" itemprop="url">
-              
-                <span itemprop="name">原型Prototyp[1]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-12-02T16:38:57+08:00"
-              content="2015-12-02" >
-          12-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/23/浏览器判断/" itemprop="url">
-              
-                <span itemprop="name">浏览器判断</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-11-23T09:37:04+08:00"
-              content="2015-11-23" >
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/23/DOM事件系列-5/" itemprop="url">
-              
-                <span itemprop="name">DOM事件系列[5]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-11-23T08:36:49+08:00"
-              content="2015-11-23" >
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/23/DOM事件系列-4/" itemprop="url">
-              
-                <span itemprop="name">DOM事件系列[4]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-11-23T08:36:36+08:00"
-              content="2015-11-23" >
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/23/DOM事件系列-3/" itemprop="url">
-              
-                <span itemprop="name">DOM事件系列[3]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-11-23T08:36:21+08:00"
-              content="2015-11-23" >
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/23/DOM事件系列-2/" itemprop="url">
-              
-                <span itemprop="name">DOM事件系列[2]</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-11-23T08:35:40+08:00"
-              content="2015-11-23" >
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
 
 
     
@@ -563,9 +323,8 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2015/page/2/">2</a><a class="extend next" rel="next" href="/archives/2015/page/2/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
-
 
 
 
@@ -703,12 +462,6 @@
 
   
   
-  
-    <script type="text/javascript">
-      postMotionOptions = {stagger: 100, drag: true};
-    </script>
-  
-
 
   
     
@@ -735,12 +488,6 @@
   <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
-
 
   <script type="text/javascript" src="/js/bootstrap.js"></script>
 

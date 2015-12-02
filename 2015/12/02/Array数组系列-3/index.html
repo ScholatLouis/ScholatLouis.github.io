@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="[3]数组API[2]Mutator Methods1 这个部分介绍的API主要有以下几个：
+
+Array.prototype.pop()Array.prototype.push()Array.prototype.shift()Array.prototype.unshift()Array.prototype.reverse()Array.prototype.sort()Array.prototyp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Array数组[3]">
+<meta property="og:url" content="http://hiLouis.github.io/2015/12/02/Array数组系列-3/index.html">
+<meta property="og:site_name" content="Louis">
+<meta property="og:description" content="[3]数组API[2]Mutator Methods1 这个部分介绍的API主要有以下几个：
+
+Array.prototype.pop()Array.prototype.push()Array.prototype.shift()Array.prototype.unshift()Array.prototype.reverse()Array.prototype.sort()Array.prototyp">
+<meta property="og:updated_time" content="2015-12-02T08:47:19.267Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Array数组[3]">
+<meta name="twitter:description" content="[3]数组API[2]Mutator Methods1 这个部分介绍的API主要有以下几个：
+
+Array.prototype.pop()Array.prototype.push()Array.prototype.shift()Array.prototype.unshift()Array.prototype.reverse()Array.prototype.sort()Array.prototyp">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'hide',
+    motion: true
+  };
+</script>
+
+  <title> Array数组[3] | Louis </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hk">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Louis</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Array数组[3]
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="[3]数组API[2]">[3]数组API[2]</h1><h3 id="Mutator_Methods">Mutator Methods</h3><p>1 这个部分介绍的API主要有以下几个：</p>
+<blockquote>
+<p>Array.prototype.pop()<br>Array.prototype.push()<br>Array.prototype.shift()<br>Array.prototype.unshift()<br>Array.prototype.reverse()<br>Array.prototype.sort()<br>Array.prototype.splice()</p>
+</blockquote>
+<p>*上面所列举的数组API都会改变当前操作的数组内容。</p>
+<h4 id="Array-prototype-pop()">Array.prototype.pop()</h4><blockquote>
+<p>该方法删除数组的最后一个元素，并且返回被删除的元素。[在原来的数组上操作，且有返回值]<br>语法：arr.pop();</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> temp = arr.pop();</span><br><span class="line"><span class="built_in">console</span>.log(temp);		<span class="comment">//print: 4</span></span><br><span class="line"><span class="built_in">console</span>.log(arr);			<span class="comment">//print: [1,2,3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于一个空数组，pop元素会返回undefined</span></span><br><span class="line"><span class="built_in">console</span>.log([].pop());	<span class="comment">//print: undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-push()">Array.prototype.push()</h4><blockquote>
+<p>该方法将一个或者多个元素插入到数组的最后位置，并且返回新数组的长度。[在原来的数组上操作，并且有返回值]<br>语法：arr.push(element1[, element2, … , elementN]);</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sports = [<span class="string">'soccer'</span>, <span class="string">'baseball'</span>];</span><br><span class="line"><span class="keyword">var</span> total = sports.push(<span class="string">'football'</span>, <span class="string">'swimming'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(sports);		<span class="comment">//print: ['soccer', 'baseball', 'football', 'swimming']</span></span><br><span class="line"><span class="built_in">console</span>.log(total);		<span class="comment">//print: 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个数组比较</span></span><br><span class="line"><span class="keyword">var</span> vegetables = [<span class="string">'parsnip'</span>, <span class="string">'potato'</span>];</span><br><span class="line"><span class="keyword">var</span> moreVegs = [<span class="string">'celery'</span>, <span class="string">'beetroot'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(vegetables.push(moreVegs));	<span class="comment">//print: ['parsnip', 'potato', Array[2]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用apply合并两个数组</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(vegetables, moreVegs);</span><br><span class="line"><span class="built_in">console</span>.log(vegetables);					<span class="comment">//print: ['parsnip', 'potato', 'celery', 'beetroot']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-shift()">Array.prototype.shift()</h4><blockquote>
+<p>该方法将数组的第一个元素移除，并且返回被移除的数组。[在原来的数组上操作，并且有返回值]<br>语法：arr.shift();</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFish = [<span class="string">'angel'</span>, <span class="string">'clown'</span>, <span class="string">'mandarin'</span>, <span class="string">'surgeon'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'myFish before: '</span> + myFish);			<span class="comment">//print: myFish before: ["angel", "clown", "mandarin", "surgeon"]</span></span><br><span class="line"><span class="keyword">var</span> shifted = myFish.shift(); </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'myFish after: '</span> + myFish); 		 	<span class="comment">//print: myFish after: ["clown", "mandarin", "surgeon"]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Removed this element: '</span> + shifted); 	<span class="comment">//print: Removed this element: angel</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于一个空数组，shift会返回undefined</span></span><br><span class="line"><span class="built_in">console</span>.log([].shift());							<span class="comment">//print: Undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-unshift()">Array.prototype.unshift()</h4><blockquote>
+<p>该方法将一个或者多个元素插入到数组的第一个位置，并且返回新数组的长度。[在原来的数组上操作，并且有返回值]<br>语法：arr.unshift(element1[, element2, …, elementN]);</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line">arr.unshift(<span class="number">0</span>); 			<span class="comment">// result of call is 3, the new array length; arr is [0, 1, 2]</span></span><br><span class="line">arr.unshift(-<span class="number">2</span>, -<span class="number">1</span>); 		<span class="comment">// = 5; arr is [-2, -1, 0, 1, 2]</span></span><br><span class="line">arr.unshift([-<span class="number">3</span>]);		<span class="comment">// arr is [[-3], -2, -1, 0, 1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个数组</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.unshift.apply([<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]);	<span class="comment">//the new arr is [1,2,3,4]</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-reverse()">Array.prototype.reverse()</h4><blockquote>
+<p>该方法将数组中所有元素的位置进行反转。[在原来的数组上操作，并且有返回值]<br>语法：arr.reverse()</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArray = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>];</span><br><span class="line">myArray.reverse();</span><br><span class="line"><span class="built_in">console</span>.log(myArray) 		<span class="comment">//print: ['three', 'two', 'one']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-sort()">Array.prototype.sort()</h4><blockquote>
+<p>该方法对数组中所有的元素都进行排序，如果没有提供比较函数compareFunction，则按照字符串的Unicode码的顺序进行排序。[在原来的数组上操作，并且有返回值]<br>语法：arr.sort([compareFunction])</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比较函数没有提供的情况下：</span></span><br><span class="line"><span class="keyword">var</span> fruit = [<span class="string">'cherries'</span>, <span class="string">'apples'</span>, <span class="string">'bananas'</span>];</span><br><span class="line">fruit.sort();		<span class="comment">//['apples', 'bananas', 'cherries'];</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> scores = [<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>, <span class="number">21</span>];		</span><br><span class="line">scores.sort();	<span class="comment">//[1, 10, 2, 21]	//没有提供比较函数，都是转化成字符串，然后根据字符串的Unicode码进行排序</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> things = [<span class="string">'word'</span>, <span class="string">'Word'</span>, <span class="string">'1 Word'</span>, <span class="string">'2 Words'</span>];</span><br><span class="line">things.sort();	<span class="comment">//['1 Word', '2 Words', 'Word', 'word']</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>compareFunction(a, b)比较函数   </p>
+<ol>
+<li>注意：a，b分别代表数组中比较的两个元素，可以是数值、对象、数组等  </li>
+<li>如果compareFunction(a, b)返回的数值小于0，则a排在b的前面  </li>
+<li>如果compareFunction(a, b)返回的数值为0，则不对a和b进行交换位置。需要注意的是ESMAscript并没有对此行为做出保证，不同的浏览器可能会有不同的做法。  </li>
+<li>如果compareFunction(a, b)返回的数值大于0，则a排在b的后面<br>compareFunction(a, b)常见的形式如下：</li>
+</ol>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compare</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a is less than b by some ordering criterion)&#123;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(a is greater than b by the ordering criterion)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//a must be equal to b</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#25353;&#25968;&#20540;&#22823;&#23567;&#25490;&#24207;&#10;var numbers = [4, 2, 5, 1, 3];&#10;numbers.sort(function(a, b)&#123;&#10;&#9;return a - b;&#10;&#125;);&#10;console.log(numbers);&#9;&#9;&#9;//print: [1, 2, 3, 4, 5]&#10;&#10;//&#23545;&#20110;&#23545;&#35937;&#20063;&#21487;&#20197;&#25353;&#29031;&#20854;&#20013;&#30340;&#23646;&#24615;&#20540;&#36827;&#34892;&#25490;&#24207;&#10;var items = [&#10; &#123; name: &#39;Edward&#39;, value: 21 &#125;,&#10; &#123; name: &#39;Sharpe&#39;, value: 37 &#125;,&#10; &#123; name: &#39;And&#39;, value: 45 &#125;,&#10; &#123; name: &#39;The&#39;, value: -12 &#125;,&#10; &#123; name: &#39;Magnetic&#39; &#125;,&#10; &#123; name: &#39;Zeros&#39;, value: 37 &#125;&#10;];&#10;items.sort(function(a, b)&#123;&#10;&#9;if(a.value &#62; b.value)&#123;&#10;&#9;&#9;return 1;&#10;&#9;&#125;&#10;&#9;if(a.value &#60; b.value)&#123;&#10;&#9;&#9;return -1;&#10;&#9;&#125;&#10;&#9;return 0;&#10;&#125;);&#10;console.log(items);&#10;//-12, 21, 37, 45, undefined, 37; &#22240;&#20026;itesms[4]&#20013;&#30340;&#23545;&#35937;&#27809;&#26377;value&#23646;&#24615;&#65292;&#26080;&#27861;&#36827;&#34892;&#27604;&#36739;&#65292;&#25152;&#20197;&#21069;&#38754;&#30340;4&#20010;&#26159;&#25353;&#39034;&#24207;&#25490;&#22909;&#65292;&#26368;&#21518;&#20004;&#20010;&#36824;&#26159;&#21407;&#26469;&#30340;&#39034;&#24207;&#12290;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>字符串与数值运算小结：<br>console.log(+true);    //print: 1;<br>console.log(+false);    //print: 0;<br>‘90’ - 80;            //results: 10;<br>‘a’ - ‘b’;            //results: NaN;<br>+’90’;                //results: 90;<br>数值型字符串会先转换成数值再进行运算；而对于非数值型字符串由于无法转换成数值，所以做任何四则运算结果都是NaN  </p>
+</blockquote>
+<h4 id="Array-prototype-splice()">Array.prototype.splice()</h4><blockquote>
+<p>该方法可以对数组中已经存在元算进行删除，也可以添加元素到数组中。[在原来的数组上操作，并且有返回值]<br>语法：arr.splice(startIndex, deleteCount[, element1, element2, …, elementN])<br>startIndex: 改变数组的起始位置，如果startIndex大于数组的长度，则将数组的长度赋值给startIndex；如果startIndex为负数，则加上数组的长度。<br>deleteCount: 从startIndex开始，要删除元素的个数；如果deleteCount为0，则不删除数组中的元素，但是此时需要提供至少一个新的元素(即第三个参数)；如果deleteCount的数值大于startIndex后面元素的个数，则将从startIndex处开始，将数组后面的元素全部删除。<br>elementN: 要添加到数组中的元素，如果该参数为空则splice()值做删除操作。<br>return：返回值是被删除的元素，如果没有删除操作则返回空数组。 </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFish = [<span class="string">'angel'</span>, <span class="string">'clown'</span>, <span class="string">'mandarin'</span>, <span class="string">'surgeon'</span>];</span><br><span class="line"><span class="keyword">var</span> removed = myFish.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="string">'drum'</span>);		<span class="comment">//myFish is ['angel', 'clown', 'drum', 'mandarin', 'surgeon']</span></span><br><span class="line">													<span class="comment">// removed is [], no elements removed</span></span><br><span class="line">removed = myFish.splice(<span class="number">3</span>, <span class="number">1</span>);					<span class="comment">// myFish is ['angel', 'clown', 'drum', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['mandarin']</span></span><br><span class="line">removed = myFish.splice(<span class="number">2</span>, <span class="number">1</span>, <span class="string">'trumpet'</span>);			<span class="comment">// myFish is ['angel', 'clown', 'trumpet', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['drum']</span></span><br><span class="line">removed = myFish.splice(<span class="number">0</span>, <span class="number">2</span>, <span class="string">'parrot'</span>, <span class="string">'anemone'</span>, <span class="string">'blue'</span>); </span><br><span class="line">													<span class="comment">// myFish is ['parrot', 'anemone', 'blue', 'trumpet', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['angel', 'clown']</span></span><br><span class="line">removed = myFish.splice(<span class="number">3</span>, myFish.length);		<span class="comment">// myFish is ['parrot', 'anemone', 'blue']</span></span><br><span class="line">											<span class="comment">// removed is ['trumpet', 'surgeon']</span></span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/02/Array数组系列-4/" rel="next" title="Array数组[4]">
+                <i class="fa fa-chevron-left"></i> Array数组[4]
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/02/Array数组系列-2/" rel="prev" title="Array数组[2]">
+                Array数组[2] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Louis" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Louis</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">分類</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">標籤</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ScholatLouis" target="_blank">
+                  
+                    <i class="fa fa-GitHub"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.scholat.com/zengweiquan" target="_blank">
+                  
+                    <i class="fa fa-Scholat"></i> Scholat
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#[3]数组API[2]"><span class="nav-number">1.</span> <span class="nav-text">[3]数组API[2]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutator_Methods"><span class="nav-number">1.0.1.</span> <span class="nav-text">Mutator Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-pop()"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">Array.prototype.pop()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-push()"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">Array.prototype.push()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-shift()"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">Array.prototype.shift()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-unshift()"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">Array.prototype.unshift()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-reverse()"><span class="nav-number">1.0.1.5.</span> <span class="nav-text">Array.prototype.reverse()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-sort()"><span class="nav-number">1.0.1.6.</span> <span class="nav-text">Array.prototype.sort()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Array-prototype-splice()"><span class="nav-number">1.0.1.7.</span> <span class="nav-text">Array.prototype.splice()</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Louis</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+    
+
+  
+
+
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

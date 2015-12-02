@@ -177,6 +177,790 @@
 
     
     
+      
+      
+        
+        
+        
+      
+
+      
+    
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-1/" itemprop="url">
+                  Array数组[1]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="Array数组系列">Array数组系列</h1><blockquote>
+<p>[1]数组的介绍<br>[2]数组API[1]<br>[3]数组API[2]<br>[4]数组API[3]<br>[5]数组API[4]</p>
+</blockquote>
+<h1 id="参考文章">参考文章</h1><blockquote>
+<p>[1]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array</a><br>[2]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Array_comprehensions" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Array_comprehensions</a><br>[3]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype</a><br>[4]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length</a><br>[5]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray</a><br>[Recommend]<a href="http://web.mit.edu/jwalden/www/isArray.html" target="_blank" rel="external">http://web.mit.edu/jwalden/www/isArray.html</a></p>
+</blockquote>
+<h1 id="[1]数组的介绍">[1]数组的介绍</h1><ol>
+<li><p>数组创建语法  </p>
+<ul>
+<li><p>数组创建有三种方法，语法分别如下：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一种</span></span><br><span class="line">[element0, element1, ..., elementN]</span><br><span class="line"><span class="comment">//第二种</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Array</span>(element0, element1[, ...[, elementN]])</span><br><span class="line"><span class="comment">//第三种</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Array</span>(arrayLength)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>elementN  </p>
+<ol>
+<li>前两种方法通过传入参数对数组进行初始化，当然参数也可以为空，直接是:  </li>
+</ol>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arrTemp1 = [];</span><br><span class="line"><span class="keyword">var</span> arrTemp = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，如果使用第二种方法创建数组，当传入的参数中有一个且为数值的时候，则变成用第三种方法创建数组了。  </p>
+<p>arrayLength</p>
+<ol>
+<li>数组创建的第三种方法是指定数组的长度，数组创建后每个元素都为undefined，长度则为传入的数值。  </li>
+</ol>
+</blockquote>
+<ul>
+<li>JavaScript的数组类似与列表形式，数组中的元素类型和数组的长度都可以发生改变。  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数组的访问</p>
+</li>
+</ol>
+<ul>
+<li>数组的第一个元素的下标为0，最后一个元素的下标则为数组的长度减去1(arr.length - 1)。  </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'this is the first element'</span>, <span class="string">'this is the second element'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="number">0</span>]);                   <span class="comment">//打印：'this is the first element'</span></span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="number">1</span>]);                   <span class="comment">//打印：'this is the second element'</span></span><br><span class="line"><span class="built_in">console</span>.log(arr[arr.length - <span class="number">1</span>]);      <span class="comment">//打印：'this is the second element'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Tip:<br>数组的访问不能类似对象Object访问属性一样使用点(.)。其实无论是数组还是对象，在访问元素或者属性的时候，如果属性开头是数字，在进行访问的时候都只能通过方括号进行[]。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> temp = &#123;</span><br><span class="line">	<span class="string">'3d'</span> : <span class="string">'3dModel'</span>,</span><br><span class="line">	<span class="string">'2d'</span> : <span class="string">'2dModel'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(temp<span class="number">.3</span>d)	<span class="comment">//报错 SyntaxError: Unexpected identifier(…)</span></span><br><span class="line"><span class="built_in">console</span>.log(temp[<span class="number">3</span>d])   <span class="comment">//打印：3dModel</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>数组长度length和下标index的关系</li>
+</ol>
+<ul>
+<li>数组的长度通过arr.length获得，下标的范围则是从0开始到arr.length - 1  </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = [];</span><br><span class="line">fruits.push(<span class="string">"banana"</span>, <span class="string">'apple'</span>, <span class="string">'peach'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(fruits.length); 	<span class="comment">//打印： 3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过改变数组的长度来修改数组内容</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">fruits[<span class="number">5</span>] = <span class="string">'mango'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(fruits[<span class="number">5</span>]);				<span class="comment">//打印：mango</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(fruits));	<span class="comment">//打印：["0", "1", "2", "5"]</span></span><br><span class="line"><span class="built_in">console</span>.log(fruits.length);			<span class="comment">//打印：6</span></span><br><span class="line"><span class="built_in">console</span>.log(fruits);				<span class="comment">//打印：["banana", "apple", "peach", undefined × 2, "mango"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//增加数组的长度</span></span><br><span class="line">fruits.length = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(fruits.length);			<span class="comment">//打印：10</span></span><br><span class="line"><span class="built_in">console</span>.log(fruits);				<span class="comment">//打印：["banana", "apple", "peach", undefined × 2, "mango", undefined × 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//减少数组的长度</span></span><br><span class="line">fruits.length = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(fruits.length);			<span class="comment">//打印：2</span></span><br><span class="line"><span class="built_in">console</span>.log(fruits);				<span class="comment">//打印：["banana", "apple"]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结论：</p>
+<ol>
+<li>改变数组的长度会影响数组元素中的内容</li>
+<li>增加数组的长度，对于新增的数组元素内容直接赋值为undefined</li>
+<li>减少数组的长度，则截断数组</li>
+</ol>
+</blockquote>
+<ol>
+<li>数组常用API分类<br>*. <a href="">数组属性(properties)</a></li>
+</ol>
+<blockquote>
+<p>Array.length<br>Array.prototype</p>
+</blockquote>
+<p>*. <a href="">改变数组API(Mutator Methods)</a></p>
+<blockquote>
+<p>Array.prototype.pop()<br>Array.prototype.push()<br>Array.prototype.shift()<br>Array.prototype.unshift()<br>Array.prototype.reverse()<br>Array.prototype.sort()<br>Array.prototype.splice()</p>
+</blockquote>
+<p>*. <a href="">访问数组API(Accessor Methods)</a></p>
+<blockquote>
+<p>Array.prototype.concat()<br>Array.prototype.join()<br>Array.prototype.slice()<br>Array.prototype.toString()<br>Array.prototype.indexOf()<br>Array.prototype.lastIndexOf()</p>
+</blockquote>
+<p>*. <a href="">遍历数组API(Iteration Methods)</a></p>
+<blockquote>
+<p>Array.prototype.forEach()<br>Array.prototype.every()<br>Array.prototype.some()<br>Array.prototype.filter()<br>Array.prototype.map()<br>Array.prototype.reduce()<br>Array.prototype.reduceRight()</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-2/" itemprop="url">
+                  Array数组[2]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[2]数组API[1]">[2]数组API[1]</h1><h4 id="Array-prototype">Array.prototype</h4><blockquote>
+<p>Array.prototype属性代表了数组Array构造器的原型链。如果需要自行拓展数组函数，需要将函数指向Array.prototype链上。<br>使用Array.isArray(Array.prototype)返回的结果为true</p>
+</blockquote>
+<h4 id="Array-prototype-length">Array.prototype.length</h4><blockquote>
+<p>获取数组的长度：arr.length；数组的最大长度为2的32次方，即Math.pow(2,32)</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> temp = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(temp.length);		<span class="comment">//打印：5</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常用于遍历数组的时候，提供退出条件</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.length; ++i)&#123;</span><br><span class="line">	numbers[i] *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Array-isArray()">Array.isArray()</h4><blockquote>
+<p>用于判断一个对象是否为数组，如果是则返回true，否则返回false。<br>语法：Array.isArray(obj)</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下都是返回true</span></span><br><span class="line"><span class="built_in">Array</span>.isArray([]);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="built_in">Array</span>.prototype);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="keyword">new</span> <span class="built_in">Array</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">//以下都是返回false</span></span><br><span class="line"><span class="built_in">Array</span>.isArray();</span><br><span class="line"><span class="built_in">Array</span>.isArray(&#123;&#125;);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="literal">null</span>);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="literal">undefined</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Array.isArray()只在IE9及其之上版本才支持，对于需要在IE9以下的版本，这需要使用以下兼容性代码：</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray)&#123;</span><br><span class="line">	<span class="built_in">Array</span>.isArray = <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(arg) === <span class="string">'[object Array]'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="typeof_VS-_instanceof">typeof VS. instanceof</h3><ol>
+<li>typeof操作符</li>
+</ol>
+<blockquote>
+<p>语法：typeof operand<br>参数：operand是一个表达式，表示对象或原始值<br>常见的类型及其返回值，如下：</p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/typeof/typeofFirst.png" alt="常见类型及其返回值"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回"number"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">37</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">3.14</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.LN2</span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">Infinity</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>			<span class="comment">//NaN是"Not-A-Number"的缩写，意思是不是一个数字，其返回结果为："number"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Number</span>(<span class="number">1</span>)		<span class="comment">//不建议这么使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"string"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">""</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">"bla"</span></span><br><span class="line"><span class="keyword">typeof</span> (<span class="keyword">typeof</span> <span class="number">1</span>)</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">String</span>(<span class="string">"Louis"</span>)	<span class="comment">//不建议这么使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"boolean"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>)		<span class="comment">//不建议这么使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"undefined"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">typeof</span> blabla				<span class="comment">//对于没有定义的变量，自然是Undefined类型；对于一个定义了，但是没有赋值的变量也为Undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"object"</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;a: <span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line"><span class="comment">//下面的三种用法不建议，容易和上面的发生混淆</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"Louis"</span>)</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">21</span>)</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"function"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.sin</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>instanceof操作符</li>
+</ol>
+<blockquote>
+<p>语法：object instanceof constructor<br>参数：object需要检测的对象; constructor构造函数<br>instanceof是用于检测对象object是否在构造函数constructor原型属性(prototype property)的原型链(prototype chain)上。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">D</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objC = <span class="keyword">new</span> C();</span><br><span class="line">objC <span class="keyword">instanceof</span> C; 				<span class="comment">//true</span></span><br><span class="line">objD <span class="keyword">instanceof</span> D;				<span class="comment">//false</span></span><br><span class="line">objC <span class="keyword">instanceof</span> <span class="built_in">Object</span>; 			<span class="comment">//true, 通过继承</span></span><br><span class="line">C.prototype insanceof <span class="built_in">Object</span>;		<span class="comment">//true 	</span></span><br><span class="line"></span><br><span class="line">C.prototype = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> objC2 = <span class="keyword">new</span> C();</span><br><span class="line">objC2 <span class="keyword">instanceof</span> C;				<span class="comment">//true</span></span><br><span class="line">objC <span class="keyword">instanceof</span> C;				<span class="comment">//true,因为原型已经改写，切断了原来实例与原型最初的关系</span></span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-3/" itemprop="url">
+                  Array数组[3]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[3]数组API[2]">[3]数组API[2]</h1><h3 id="Mutator_Methods">Mutator Methods</h3><p>1 这个部分介绍的API主要有以下几个：</p>
+<blockquote>
+<p>Array.prototype.pop()<br>Array.prototype.push()<br>Array.prototype.shift()<br>Array.prototype.unshift()<br>Array.prototype.reverse()<br>Array.prototype.sort()<br>Array.prototype.splice()</p>
+</blockquote>
+<p>*上面所列举的数组API都会改变当前操作的数组内容。</p>
+<h4 id="Array-prototype-pop()">Array.prototype.pop()</h4><blockquote>
+<p>该方法删除数组的最后一个元素，并且返回被删除的元素。[在原来的数组上操作，且有返回值]<br>语法：arr.pop();</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> temp = arr.pop();</span><br><span class="line"><span class="built_in">console</span>.log(temp);		<span class="comment">//print: 4</span></span><br><span class="line"><span class="built_in">console</span>.log(arr);			<span class="comment">//print: [1,2,3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于一个空数组，pop元素会返回undefined</span></span><br><span class="line"><span class="built_in">console</span>.log([].pop());	<span class="comment">//print: undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-push()">Array.prototype.push()</h4><blockquote>
+<p>该方法将一个或者多个元素插入到数组的最后位置，并且返回新数组的长度。[在原来的数组上操作，并且有返回值]<br>语法：arr.push(element1[, element2, … , elementN]);</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sports = [<span class="string">'soccer'</span>, <span class="string">'baseball'</span>];</span><br><span class="line"><span class="keyword">var</span> total = sports.push(<span class="string">'football'</span>, <span class="string">'swimming'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(sports);		<span class="comment">//print: ['soccer', 'baseball', 'football', 'swimming']</span></span><br><span class="line"><span class="built_in">console</span>.log(total);		<span class="comment">//print: 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个数组比较</span></span><br><span class="line"><span class="keyword">var</span> vegetables = [<span class="string">'parsnip'</span>, <span class="string">'potato'</span>];</span><br><span class="line"><span class="keyword">var</span> moreVegs = [<span class="string">'celery'</span>, <span class="string">'beetroot'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(vegetables.push(moreVegs));	<span class="comment">//print: ['parsnip', 'potato', Array[2]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用apply合并两个数组</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(vegetables, moreVegs);</span><br><span class="line"><span class="built_in">console</span>.log(vegetables);					<span class="comment">//print: ['parsnip', 'potato', 'celery', 'beetroot']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-shift()">Array.prototype.shift()</h4><blockquote>
+<p>该方法将数组的第一个元素移除，并且返回被移除的数组。[在原来的数组上操作，并且有返回值]<br>语法：arr.shift();</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFish = [<span class="string">'angel'</span>, <span class="string">'clown'</span>, <span class="string">'mandarin'</span>, <span class="string">'surgeon'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'myFish before: '</span> + myFish);			<span class="comment">//print: myFish before: ["angel", "clown", "mandarin", "surgeon"]</span></span><br><span class="line"><span class="keyword">var</span> shifted = myFish.shift(); </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'myFish after: '</span> + myFish); 		 	<span class="comment">//print: myFish after: ["clown", "mandarin", "surgeon"]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Removed this element: '</span> + shifted); 	<span class="comment">//print: Removed this element: angel</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于一个空数组，shift会返回undefined</span></span><br><span class="line"><span class="built_in">console</span>.log([].shift());							<span class="comment">//print: Undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-unshift()">Array.prototype.unshift()</h4><blockquote>
+<p>该方法将一个或者多个元素插入到数组的第一个位置，并且返回新数组的长度。[在原来的数组上操作，并且有返回值]<br>语法：arr.unshift(element1[, element2, …, elementN]);</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line">arr.unshift(<span class="number">0</span>); 			<span class="comment">// result of call is 3, the new array length; arr is [0, 1, 2]</span></span><br><span class="line">arr.unshift(-<span class="number">2</span>, -<span class="number">1</span>); 		<span class="comment">// = 5; arr is [-2, -1, 0, 1, 2]</span></span><br><span class="line">arr.unshift([-<span class="number">3</span>]);		<span class="comment">// arr is [[-3], -2, -1, 0, 1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个数组</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.unshift.apply([<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]);	<span class="comment">//the new arr is [1,2,3,4]</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-reverse()">Array.prototype.reverse()</h4><blockquote>
+<p>该方法将数组中所有元素的位置进行反转。[在原来的数组上操作，并且有返回值]<br>语法：arr.reverse()</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArray = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>];</span><br><span class="line">myArray.reverse();</span><br><span class="line"><span class="built_in">console</span>.log(myArray) 		<span class="comment">//print: ['three', 'two', 'one']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-sort()">Array.prototype.sort()</h4><blockquote>
+<p>该方法对数组中所有的元素都进行排序，如果没有提供比较函数compareFunction，则按照字符串的Unicode码的顺序进行排序。[在原来的数组上操作，并且有返回值]<br>语法：arr.sort([compareFunction])</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比较函数没有提供的情况下：</span></span><br><span class="line"><span class="keyword">var</span> fruit = [<span class="string">'cherries'</span>, <span class="string">'apples'</span>, <span class="string">'bananas'</span>];</span><br><span class="line">fruit.sort();		<span class="comment">//['apples', 'bananas', 'cherries'];</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> scores = [<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>, <span class="number">21</span>];		</span><br><span class="line">scores.sort();	<span class="comment">//[1, 10, 2, 21]	//没有提供比较函数，都是转化成字符串，然后根据字符串的Unicode码进行排序</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> things = [<span class="string">'word'</span>, <span class="string">'Word'</span>, <span class="string">'1 Word'</span>, <span class="string">'2 Words'</span>];</span><br><span class="line">things.sort();	<span class="comment">//['1 Word', '2 Words', 'Word', 'word']</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>compareFunction(a, b)比较函数   </p>
+<ol>
+<li>注意：a，b分别代表数组中比较的两个元素，可以是数值、对象、数组等  </li>
+<li>如果compareFunction(a, b)返回的数值小于0，则a排在b的前面  </li>
+<li>如果compareFunction(a, b)返回的数值为0，则不对a和b进行交换位置。需要注意的是ESMAscript并没有对此行为做出保证，不同的浏览器可能会有不同的做法。  </li>
+<li>如果compareFunction(a, b)返回的数值大于0，则a排在b的后面<br>compareFunction(a, b)常见的形式如下：</li>
+</ol>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compare</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a is less than b by some ordering criterion)&#123;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(a is greater than b by the ordering criterion)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//a must be equal to b</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#25353;&#25968;&#20540;&#22823;&#23567;&#25490;&#24207;&#10;var numbers = [4, 2, 5, 1, 3];&#10;numbers.sort(function(a, b)&#123;&#10;&#9;return a - b;&#10;&#125;);&#10;console.log(numbers);&#9;&#9;&#9;//print: [1, 2, 3, 4, 5]&#10;&#10;//&#23545;&#20110;&#23545;&#35937;&#20063;&#21487;&#20197;&#25353;&#29031;&#20854;&#20013;&#30340;&#23646;&#24615;&#20540;&#36827;&#34892;&#25490;&#24207;&#10;var items = [&#10; &#123; name: &#39;Edward&#39;, value: 21 &#125;,&#10; &#123; name: &#39;Sharpe&#39;, value: 37 &#125;,&#10; &#123; name: &#39;And&#39;, value: 45 &#125;,&#10; &#123; name: &#39;The&#39;, value: -12 &#125;,&#10; &#123; name: &#39;Magnetic&#39; &#125;,&#10; &#123; name: &#39;Zeros&#39;, value: 37 &#125;&#10;];&#10;items.sort(function(a, b)&#123;&#10;&#9;if(a.value &#62; b.value)&#123;&#10;&#9;&#9;return 1;&#10;&#9;&#125;&#10;&#9;if(a.value &#60; b.value)&#123;&#10;&#9;&#9;return -1;&#10;&#9;&#125;&#10;&#9;return 0;&#10;&#125;);&#10;console.log(items);&#10;//-12, 21, 37, 45, undefined, 37; &#22240;&#20026;itesms[4]&#20013;&#30340;&#23545;&#35937;&#27809;&#26377;value&#23646;&#24615;&#65292;&#26080;&#27861;&#36827;&#34892;&#27604;&#36739;&#65292;&#25152;&#20197;&#21069;&#38754;&#30340;4&#20010;&#26159;&#25353;&#39034;&#24207;&#25490;&#22909;&#65292;&#26368;&#21518;&#20004;&#20010;&#36824;&#26159;&#21407;&#26469;&#30340;&#39034;&#24207;&#12290;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>字符串与数值运算小结：<br>console.log(+true);    //print: 1;<br>console.log(+false);    //print: 0;<br>‘90’ - 80;            //results: 10;<br>‘a’ - ‘b’;            //results: NaN;<br>+’90’;                //results: 90;<br>数值型字符串会先转换成数值再进行运算；而对于非数值型字符串由于无法转换成数值，所以做任何四则运算结果都是NaN  </p>
+</blockquote>
+<h4 id="Array-prototype-splice()">Array.prototype.splice()</h4><blockquote>
+<p>该方法可以对数组中已经存在元算进行删除，也可以添加元素到数组中。[在原来的数组上操作，并且有返回值]<br>语法：arr.splice(startIndex, deleteCount[, element1, element2, …, elementN])<br>startIndex: 改变数组的起始位置，如果startIndex大于数组的长度，则将数组的长度赋值给startIndex；如果startIndex为负数，则加上数组的长度。<br>deleteCount: 从startIndex开始，要删除元素的个数；如果deleteCount为0，则不删除数组中的元素，但是此时需要提供至少一个新的元素(即第三个参数)；如果deleteCount的数值大于startIndex后面元素的个数，则将从startIndex处开始，将数组后面的元素全部删除。<br>elementN: 要添加到数组中的元素，如果该参数为空则splice()值做删除操作。<br>return：返回值是被删除的元素，如果没有删除操作则返回空数组。 </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFish = [<span class="string">'angel'</span>, <span class="string">'clown'</span>, <span class="string">'mandarin'</span>, <span class="string">'surgeon'</span>];</span><br><span class="line"><span class="keyword">var</span> removed = myFish.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="string">'drum'</span>);		<span class="comment">//myFish is ['angel', 'clown', 'drum', 'mandarin', 'surgeon']</span></span><br><span class="line">													<span class="comment">// removed is [], no elements removed</span></span><br><span class="line">removed = myFish.splice(<span class="number">3</span>, <span class="number">1</span>);					<span class="comment">// myFish is ['angel', 'clown', 'drum', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['mandarin']</span></span><br><span class="line">removed = myFish.splice(<span class="number">2</span>, <span class="number">1</span>, <span class="string">'trumpet'</span>);			<span class="comment">// myFish is ['angel', 'clown', 'trumpet', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['drum']</span></span><br><span class="line">removed = myFish.splice(<span class="number">0</span>, <span class="number">2</span>, <span class="string">'parrot'</span>, <span class="string">'anemone'</span>, <span class="string">'blue'</span>); </span><br><span class="line">													<span class="comment">// myFish is ['parrot', 'anemone', 'blue', 'trumpet', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['angel', 'clown']</span></span><br><span class="line">removed = myFish.splice(<span class="number">3</span>, myFish.length);		<span class="comment">// myFish is ['parrot', 'anemone', 'blue']</span></span><br><span class="line">											<span class="comment">// removed is ['trumpet', 'surgeon']</span></span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-4/" itemprop="url">
+                  Array数组[4]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[4]数组API[3]">[4]数组API[3]</h1><h3 id="Accessor_Methods">Accessor Methods</h3><p>1 这部分将要介绍的API主要是以下几个：</p>
+<blockquote>
+<p>Array.prototype.concat()<br>Array.prototype.join()<br>Array.prototype.slice()<br>Array.prototype.toString()<br>Array.prototype.indexOf()<br>Array.prototype.lastIndexOf()  </p>
+</blockquote>
+<p>*上面列举的API都不会修改原来的数组</p>
+<h4 id="Array-prototype-concat">Array.prototype.concat</h4><blockquote>
+<p>由原来的数组和提供的参数组成一个新的数组，并返回。<br>语法：var newArr = oldArr.concat([element1, element2, element3, …, elementN]);<br>说明：   </p>
+<blockquote>
+<p>1 concat()函数并不会改变原来数组中的元素，但是会返回一个新的数组。<br>2 对于数组中含有对象引用，concat()函数只是进行浅复制(shallow copy)，即新数组和原来数组都是指向同一个对象。也就是说，一旦指向的对象被修改，则原来数组和新数组中相应的元素都会发生变化。<br>3 对于字符串和数值则是直接复制到新数组中。 </p>
+</blockquote>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> alpha = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>],</span><br><span class="line">    numeric = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> alphaNumeric = alpha.concat(numeric);</span><br><span class="line"><span class="built_in">console</span>.log(alphaNumeric); 	<span class="comment">//result: ['a', 'b', 'c', 1, 2, 3]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">    num2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">    num3 = [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>];</span><br><span class="line"><span class="keyword">var</span> nums = num1.concat(num2, num3);</span><br><span class="line"><span class="built_in">console</span>.log(nums); 			<span class="comment">//result: [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//指向对象引用</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;name: <span class="string">"Louis"</span>, age: <span class="number">23</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objArr = [obj];</span><br><span class="line"><span class="keyword">var</span> newArr = objArr.concat();</span><br><span class="line"><span class="built_in">console</span>.log(objArr[<span class="number">0</span>].age);	<span class="comment">//result: 23</span></span><br><span class="line"><span class="built_in">console</span>.log(newArr[<span class="number">0</span>].age);	<span class="comment">//result: 23</span></span><br><span class="line"></span><br><span class="line">obj.age = <span class="number">24</span>;</span><br><span class="line"><span class="built_in">console</span>.log(objArr[<span class="number">0</span>].age);	<span class="comment">//result: 24</span></span><br><span class="line"><span class="built_in">console</span>.log(newArr[<span class="number">0</span>].age);	<span class="comment">//result: 24</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-join()">Array.prototype.join()</h4><blockquote>
+<p>该方法将数组转换成字符串，并返回该字符串。<br>语法：arr.join([separator=’,’])<br>separator: 分隔符是可选的，当没有传入分隔符的时候则数组返回的字符串中每个元素使用逗号,  进行分开；如果有传入分隔符，则按照分隔符分开。  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="string">'Wind'</span>, <span class="string">'Rain'</span>, <span class="string">'Fire'</span>];</span><br><span class="line"><span class="keyword">var</span> myVar1 = a.join();      <span class="comment">// assigns 'Wind,Rain,Fire' to myVar1</span></span><br><span class="line"><span class="keyword">var</span> myVar2 = a.join(<span class="string">', '</span>);  <span class="comment">// assigns 'Wind, Rain, Fire' to myVar2</span></span><br><span class="line"><span class="keyword">var</span> myVar3 = a.join(<span class="string">' + '</span>); <span class="comment">// assigns 'Wind + Rain + Fire' to myVar3</span></span><br><span class="line"><span class="keyword">var</span> myVar4 = a.join(<span class="string">''</span>);    <span class="comment">// assigns 'WindRainFire' to myVar4</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-slice()">Array.prototype.slice()</h4><blockquote>
+<p>该方法返回一个新的数组，新的数组是原来数组的部分浅复制(shadllow copy)。<br>语法：arr.slice([startIndex[, endIndex]])<br>startIndex: 当没有传入该参数则默认为0；如果传入的是负数，则加上数组长度；<br>endIndex: 当没有传入该参数则默认是数组的长度(arr.length)；如果传入的是负数，则加上数组的长度<br>需要注意的是截取的数组中不包括endIndex位置处的元素，即从startIndex到endIndex-1<br>对于对象引用，跟Array.prototype.concat()函数一样  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = [<span class="string">'Banana'</span>, <span class="string">'Orange'</span>, <span class="string">'Lemon'</span>, <span class="string">'Apple'</span>, <span class="string">'Mango'</span>];</span><br><span class="line"><span class="keyword">var</span> citrus = fruits.slice(<span class="number">1</span>, <span class="number">3</span>);		<span class="comment">// citrus = ['Orange','Lemon']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-toString()">Array.prototype.toString()</h4><blockquote>
+<p>将数组组成一个字符串，并返回字符串。<br>语法：arr.toString()<br>与arr.join();得到的字符串一样  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = [<span class="string">'Banana'</span>, <span class="string">'Orange'</span>, <span class="string">'Lemon'</span>, <span class="string">'Apple'</span>, <span class="string">'Mango'</span>];</span><br><span class="line"><span class="keyword">var</span> temp = fruits.toString();		<span class="comment">//print: "Banana,Orange,Lemon,Apple,Mango"</span></span><br><span class="line"><span class="keyword">var</span> temp2 = fruits.join();		<span class="comment">//print: "Banana,Orange,Lemon,Apple,Mango"</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-indexOf()">Array.prototype.indexOf()</h4><blockquote>
+<p>该方法从数组(由前往后，即从0到arr.length-1顺序)找查找某个元素，如果能找到则返回第一个相同元素在数组中的位置；如果没能找到则返回-1<br>语法：arr.indexOf(searchElement[, fromIndex = 0])<br>searchElement: 要在数组中查找的元素<br>fromIndex: 从某个位置开始查找，如果没有该参数则默认为0；如果fromIndex大于或者等于数组的长度，则直接返回-1；如果fromIndex小于0，则加上数组的长度，从结果值的位置开始查找，如果结果值还是小于0，则是整个数组查找。  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array = [<span class="number">2</span>, <span class="number">5</span>, <span class="number">9</span>];</span><br><span class="line">array.indexOf(<span class="number">2</span>);     <span class="comment">// 0</span></span><br><span class="line">array.indexOf(<span class="number">7</span>);     <span class="comment">// -1</span></span><br><span class="line">array.indexOf(<span class="number">9</span>, <span class="number">2</span>);  <span class="comment">// 2</span></span><br><span class="line">array.indexOf(<span class="number">9</span>, <span class="number">3</span>);	<span class="comment">//-1</span></span><br><span class="line">array.indexOf(<span class="number">2</span>, -<span class="number">1</span>); <span class="comment">// -1</span></span><br><span class="line">array.indexOf(<span class="number">2</span>, -<span class="number">3</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//找到数组中某个元素的所有位置</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'a'</span>, <span class="string">'d'</span>];</span><br><span class="line"><span class="keyword">var</span> searchElement = <span class="string">'a'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indices = [];</span><br><span class="line"><span class="keyword">var</span> index = array.indexOf(searchElement);</span><br><span class="line"><span class="keyword">while</span>(index != -<span class="number">1</span>)&#123;</span><br><span class="line">	indices.push(index);</span><br><span class="line">	index = array.indexOf(searchElement, index + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(indices);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>indexOf()只在IE9及其以上支持，所以对于低版本的IE需要先实现indexOf()函数，如下：  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Array</span>.prototype.indexOf)&#123;</span><br><span class="line">	<span class="built_in">Array</span>.prototype.indexOf = <span class="function"><span class="keyword">function</span>(<span class="params">searchElement, fromIndex</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> k;</span><br><span class="line">		<span class="comment">//this是指向调用的函数</span></span><br><span class="line">		<span class="comment">//只有当this === undefined的时候才会 === void 0</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span> == <span class="literal">null</span> || <span class="keyword">this</span> === <span class="keyword">void</span> <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'"this" is null or not defined'</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//将函数转化成对象</span></span><br><span class="line">		<span class="keyword">var</span> O = <span class="built_in">Object</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//&gt;&gt;&gt;的两个作用：1)将非数值型转化成0；2)对于含有小数点的，只取其整数部分</span></span><br><span class="line">		<span class="keyword">var</span> len = O.length &gt;&gt;&gt; <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(len === <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据是否传入fromIndex进行取值</span></span><br><span class="line">		<span class="keyword">var</span> n = +fromIndex || <span class="number">0</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">Math</span>.abs(n) === <span class="literal">Infinity</span>)&#123;</span><br><span class="line">			n = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(n &gt;= len)&#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//k其实是数组下标</span></span><br><span class="line">		k = <span class="built_in">Math</span>.max(n &gt;= <span class="number">0</span> ? n : len - <span class="built_in">Math</span>.abs(n), <span class="number">0</span>);</span><br><span class="line">		<span class="comment">//逐个数组元素进行比较</span></span><br><span class="line">		<span class="keyword">while</span>( k &lt; len )&#123;</span><br><span class="line">			<span class="keyword">if</span>(k <span class="keyword">in</span> O &amp;&amp; O[k] === searchElement)&#123;</span><br><span class="line">				<span class="keyword">return</span> k;</span><br><span class="line">			&#125;</span><br><span class="line">			K++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-lastIndexOf()">Array.prototype.lastIndexOf()</h4><blockquote>
+<p>从数组中查找指定的元素，如果存在则返回该元素第一次出现在数组中的位置，否则返回-1。需要注意的是查找的方向是从数组尾部往前，即arr.length到0<br>语法：arr.lastIndexOf(searchElement[, fromIndex = arr.length - 1])<br>searchElement: 要查找的值<br>fromIndex: 如果没有传入该参数则默认为arr.length数组长度；如果传入的数值大于或等于数组的长度，则对整个数组都进行查找；如果传入的是负数，则加上数组的长度，从结果值处开始查找，如果结果值还是负数则直接返回-1；需要注意的是对于有传入fromIndex，是从fromIndex处开始往前查找  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array = [<span class="number">2</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">2</span>];</span><br><span class="line">array.lastIndexOf(<span class="number">2</span>);     <span class="comment">// 3</span></span><br><span class="line">array.lastIndexOf(<span class="number">7</span>);     <span class="comment">// -1</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, <span class="number">3</span>);  <span class="comment">// 3</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, <span class="number">2</span>);  <span class="comment">// 0 注意结果不是 3</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, -<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, -<span class="number">1</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/原型Prototyp-1/" itemprop="url">
+                  原型Prototyp[1]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:38:57+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <blockquote>
+<p>在看了不少资料之后，对于原型的理解就是两个字，共享。<br>  在这一部分，将通过分析原型出现的原因，已经原型的应用–&gt;继承。</p>
+</blockquote>
+<h3 id="原型Prototype的出现">原型Prototype的出现</h3><blockquote>
+<p>在讨论原型的出现，就需要从对象的创建开始说起。</p>
+</blockquote>
+<p>  创建对象可以通过new Object()或者直接通过对象字面量{}完成，但是使用这种方法会导致在创建多个对象的时候，产生大量的代码。因此有了工厂模式：</p>
+<ol>
+<li><p>工厂模式<br>工厂模式就是使用一个函数将需要创建的对象的属性都封装起来，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">	obj.name = name;</span><br><span class="line">	obj.age = age;</span><br><span class="line">	obj.job = job;</span><br><span class="line">	obj.alertName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = createPerson(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> PersonSecond = createPerson(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+<p>这样就可以通过工厂模式创建对象，只需要将参数传入到createPerson函数中，函数会返回一个obj初始化后的对象。需要注意的是，使用工厂模式创建的对象，不能解决对象识别问题，即：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">personFirst <span class="keyword">instanceof</span> object 	<span class="comment">//打印true</span></span><br><span class="line">personFirst <span class="keyword">instanceof</span> createPerson 	<span class="comment">//打印false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.job = job;</span><br><span class="line">	<span class="keyword">this</span>.alertName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>1.首先构造函数和普通的函数是没有什么不同<br>2.要把一个函数当成构造函数使用，只需要使用new操作符<br>3.根据习惯，构造函数的第一个字母使用大写</p>
+</blockquote>
+<ul>
+<li><p>new操作符创建对象的过程<br>创建一个新的对象 –&gt; 将构造函数的作用域赋给新对象(即this指向了新对象) –&gt; 对象的初始化 –&gt; 返回新对象</p>
+</li>
+<li><p>构造函数模式的不足</p>
+</li>
+</ul>
+<blockquote>
+<p>使用构造函数存在的最大问题就是每个实例都会将所有的属性创建一次。这个对于数值属性来说可以接受，但是如果函数方法每个实例都要创建一遍，则不合理。所以对于构造函数模式可以将方法转移到构造函数外部，如下：</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.job = job;</span><br><span class="line">	<span class="keyword">this</span>.sayName = sayName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但是对于这种方法，如果需要多个函数，则会导致很多个全局函数。对于构造函数模式的这个问题，我们可以通过原型来解决。</p>
+</blockquote>
+<ol>
+<li>原型模式<ul>
+<li>原型</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>在每个创建的函数中都会有一个原型prototype属性，这个属性是一个指针，指向一个对象。原型指向的这个对象包含可以由该函数创建的对象共享访问的属性和方法。简单的说就是该原型指向的对象中含有可以被共享访问的属性和方法，而只有该函数创建的实例才有权限访问。  </p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="comment">//构造函数prototype指向的原型对象</span></span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用构造函数创建的实例</span></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line">personFirst.sayName();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line">personSecond.sayName();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(personFirst.sayName == personSecond.sayName);	<span class="comment">//打印true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们在Person函数的原型中添加的所有属性和方法都能够被personFrist和personSecond访问，而且需要注意的是共享访问，而不是各自保存一个副本。  </p>
+</blockquote>
+<ul>
+<li>原型对象的理解<ol>
+<li>在创建了一个函数之后，JavaScript引擎就会为该函数创建一个prototype属性，这个属性指向原型对象。而原型对象中含有一个constructor的属性，这个属性指向含有原型对象所在的函数。就如之前的构造函数Person、Person.prototype、personFirst之间的关系如下图：<br><img src="http://123.56.156.116/Louis/prototype/prototypeFirst.png" alt="三者之间的关系示意图"></li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>由上图可以看到，其实实例和构造函数之间并没有直接的联系。每个实例中都含有[[prototype]]属性，这个属性指向Person.prototype这个原型对象，而Person.prototype原型对象中含有constructor属性则指向构造函数Person，构造函数也含有指向Person.prototype原型的属性prototype。<br>在personFirst中我们可以看到，该对象除了[[prototype]]属性之外，并没有其他的属性。但是我们能够通过personFirst.name得到“Louis”的值。这就是原型和对象实例查找属性的问题：</p>
+<blockquote>
+<p>一个对象在读取某个属性值的时候，首先是先查找该对象是否包含这个属性，如果有则返回，不再向原型查找；如果没有则向上查找该对象指向的原型是否含有这个属性，如果有则返回原型中该属性的值，如果没有则继续向继承的原型链上查找，如果还是没有则直接返回undefined。<br>对于上面的例子，在使用personFirst.name访问取name属性值的时候，首先先找personFirst这个对象上是否含有属性值name，很明显并没有，接着则personFirst的原型链Person.prototype上查找name属性，发现有，而且值为”Louis”，则将该值直接返回。</p>
+</blockquote>
+</blockquote>
+<ol>
+<li><p>原型属性的屏蔽：当我们在对象实例上创建一个和原型上相同名称的属性时，根据属性的查找顺序，我们可以知道原型上相同名称的属性将会被屏蔽掉。Show the fllowing code!</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="comment">//原型对象</span></span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Perosn.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line">personFirst.name = <span class="string">"John"</span>;</span><br><span class="line">personFirst.sayName()	<span class="comment">//打印: John	--&gt; 来自实例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line">personSecond.sayName()	<span class="comment">//打印：Louis	--&gt; 来自原型</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>当我们为对象添加一个属性的时候，这个属性就会屏蔽原型对象中的同名属性；也就是说如果添加的这个属性只会阻止我们访问原型中的那个对象，但是不会修改原型中的属性。不过，我们可以使用delete操作符来删除对象实例属性，从而恢复访问原型中的对象。</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line">person1.name = <span class="string">"June"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person1.name);	 	<span class="comment">//打印： June --&gt; 来自对象</span></span><br><span class="line"><span class="built_in">console</span>.log(person2.name);		<span class="comment">//打印： Louis--&gt; 来自原型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> person1.name;</span><br><span class="line"><span class="built_in">console</span>.log(person1.name); 		<span class="comment">//打印： Louis--&gt; 来自原型</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>in操作符<ol>
+<li>hasOwnProperty &amp;&amp; in 操作符<br>使用hasOwnProperty()方法可以检测是一个属性是存在于实例中，还是原型中。只有当给定的属性存在于对象实例中，才会返回true。而对于in操作符，则无论属性是否存在于实例还是原型中，只要能够访问到这个属性，则返回true。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用hasOwnProperty()方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(personFirst.hasOwnProperty(<span class="string">"name"</span>));	<span class="comment">//false	--&gt; 来自原型</span></span><br><span class="line"><span class="built_in">console</span>.log(personSecond.hasOwnProperty(<span class="string">"age"</span>));	<span class="comment">//false --&gt; 来自原型</span></span><br><span class="line"></span><br><span class="line">personFirst.name = <span class="string">"June"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(personFirst.hasOwnProperty(<span class="string">"name"</span>));	<span class="comment">//true --&gt; 来自对象实例</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//使用in操作符</span></span><br><span class="line">   	<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">   	Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">    Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">    Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">    Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line">    <span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> personFirst);	<span class="comment">//true --&gt; 来自原型</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"age"</span> <span class="keyword">in</span> personSecond);	<span class="comment">//true --&gt; 来自原型</span></span><br><span class="line"></span><br><span class="line">    personFirst.name = <span class="string">"June"</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> personFirst);	<span class="comment">//true --&gt; 来自实例对象</span></span><br><span class="line"><span class="string">``</span><span class="string">`   </span><br><span class="line"></span><br><span class="line">&gt; 下面的代码用来检测属性是否存在于原型中</span><br><span class="line"></span><br><span class="line">`</span><span class="string">``</span>JavaScript</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hasPrototypeProperty</span>(<span class="params">obj, name</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> !obj.hasOwnProperty(name) &amp;&amp; (name <span class="keyword">in</span> obj);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原型的字面量写法<ol>
+<li>上面使用Person.prototype.xxx的方法书写原型，每次需要添加属性的时候都要重复书写前面部分的代码。对于这种情况，我们可以使用原型的字面量来创建原型对象。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">	name: <span class="string">"Louis"</span>,</span><br><span class="line">	age : <span class="number">23</span>,</span><br><span class="line">	job : <span class="string">"Student"</span>,</span><br><span class="line">	sayName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用原型字面量有一点需要注意的是，原型对象的constructor属性不再指向原来的构造函数Person();<br>这是因为使用Person.prototype = {}创建原型，相当于Person.prototype是Object的实例，而实例中存在的[[prototype]]指向的是Object的原型，原型中的constructor属性指向的就是Object对象，所以如果constructor属性很重要，则需要在创建原型的字面量上重新指定，如：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">	constructor : Person,</span><br><span class="line">	name: <span class="string">"Louis"</span>,</span><br><span class="line">	age : <span class="number">23</span>,</span><br><span class="line">	job : <span class="string">"Student"</span>,</span><br><span class="line">	sayName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原型的动态性<ol>
+<li>原型的动态性体现在只要对原型对象所做的任何修改都能够立即从实例上得到反映。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> friend = <span class="keyword">new</span> Person();</span><br><span class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"halo Louis"</span>);</span><br><span class="line">&#125;</span><br><span class="line">friend.sayHi();		<span class="comment">//打印： halo Louis</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，给原型添加属性和方法都能够在实例上得到反映，但是如果重新改写原型，则会切断实例和原型之间最初的关系。<br>需要谨记的是：实例中的指针仅仅指向原型，而不是指向构造函数<br>重写原型之后构造函数、对象实例、原型之间的关系如下图：</p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/prototype/prototypeSecond.png" alt="重写原型之后构造函数、对象实例、原型之间的关系"></p>
+<ul>
+<li>原型的弊端<br>1.原型的弊端也是显而易见的，对于数值型属性而言，每一个属性也都是共享的。对于所创建的每一个实例都具有相同的属性值，其实也不合理。应该是数值型属性为各自所有，而方法属性则可以进行共享，所以一般在创建构造函数的时候都是使用构造函数模式和原型模式相结合进行，如：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//属性私有</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.job = job;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方法共有</span></span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br><span class="line">personFirst.sayName(); 	<span class="comment">//打印： June</span></span><br><span class="line">personSecond.sayName();	<span class="comment">//打印： Louis</span></span><br></pre></td></tr></table></figure>
+<h3 id="参考文章">参考文章</h3><blockquote>
+<p>[1]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain</a><br>[2]<a href="http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/" target="_blank" rel="external">http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/</a><br>[3]<a href="http://blog.vjeux.com/2011/javascript/how-prototypal-inheritance-really-works.html" target="_blank" rel="external">http://blog.vjeux.com/2011/javascript/how-prototypal-inheritance-really-works.html</a><br>[4]<a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html</a><br>[5]JavaScript高级程序设计(3nd Edition)第六章</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -810,144 +1594,14 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/23/DOM事件系列-1/" itemprop="url">
-                  DOM事件系列[1]
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            發表於
-            <time itemprop="dateCreated" datetime="2015-11-23T08:30:35+08:00" content="2015-11-23">
-              2015-11-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分類於
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="[1]DOM_Level_0_与_DOM_Level_2事件">[1]DOM Level 0 与 DOM Level 2事件</h1><ol>
-<li><p>DOM Level 0事件</p>
-<ul>
-<li><p>一开始浏览器处理事件的方式是将事件处理程序被设置为js代码串，且作为html的属性值（DOM Level 0的事件直接绑定到HTML代码中），如：  </p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">onclick</span>=<span class="value">"alert('event inline');"</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>DOM Level 0对某一元素不能同时绑定同一事件，因为后面的事件会覆盖前面同样的事件绑定</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">onclick</span>=<span class="value">"alert('event inline');"</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line">```	</span><br><span class="line">```JavaScript</span><br><span class="line">var test = document.getElementById("test");</span><br><span class="line">test.onclick = function()&#123;</span><br><span class="line">	alert("event first");</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">test.onclick = function()&#123;</span><br><span class="line">	alert("event second");</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="http://jsfiddle.net/Louis_Tsang/8sb5cys2/" title="Example" target="_blank" rel="external">Example点击查看</a><br>最后弹框出现的只有event second，event first绑定的事件被覆盖，inline的事件也被覆盖</p>
-</li>
-<li>DOM Level 0绑定事件的两种方法如上：<br>1.将事件作为html的属性直接写在html代码中。<br>2.获取元素，在通过元素的.onEvent = function(){}进行绑定。  </li>
-</ul>
-</li>
-<li><p>DOM Level 2事件</p>
-<ul>
-<li>DOM Level 2规定了事件的传播方式，主要有三个阶段，分别是捕获Capturing Phase、目标Target Phase和冒泡Bubble Phase。这个知识点详细内容请看目录[2]<a href="">事件传播与冒泡</a></li>
-<li>DOM Level 2的事件则是通过addEventListener(IE浏览器使用attachEvent)函数对元素设置监听函数。  <ul>
-<li>addEventListener(String, function(event), Boolean)函数介绍  <ol>
-<li>第一个参数String，指的是事件类型。如绑定点击事件则是click，需要注意的是没有on前缀，不是onclick  </li>
-<li>第二个参数是事件处理函数，JS在调用的时候会传入事件event，关于事件event的详细内容请看目录[3]<a href="">Event对象</a>  </li>
-<li>第三个参数是一个boolean值，取true或者false。当为true的时候则表示在事件Capturing Phase阶段执行处理函数；为false的时候则表示在事件Bubble Phase阶段执行处理函数。  </li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>通过DOM Level 2事件绑定，同个元素可以绑定多个相同事件，各个事件根据绑定的顺序依次执行。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">onclick</span>=<span class="value">"alert('event inline');"</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="built_in">document</span>.getElementById(<span class="string">"test"</span>);</span><br><span class="line">test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="string">"event first"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">test.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="string">"event second"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><a href="http://jsfiddle.net/Louis_Tsang/t2LsqmLx/" title="Example" target="_blank" rel="external">Example点击查看</a></p>
-</li>
-</ul>
-</li>
-<li>DOM Level 0 与 DOM Level 2的比较  <ol>
-<li>事件的绑定方式不同  </li>
-<li>DOM Level 2将事件分为三个阶段，而DOM Level 0则没有，默认事件在相当于DOM Level 2事件Bubble Phase处理(即如果用0级DOM的2个方法赋值的事件监听函数不能在capturing阶段捕捉到事件)。  </li>
-<li>DOM Level 0事件浏览器支持比较统一，而如果使用DOM Level 2则在IE和非IE情况下需要做区分。具体的处理方法请看目录[5]<a href="">跨浏览器中事件</a> </li>
-</ol>
-</li>
-</ol>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
         </div>
@@ -986,7 +1640,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
