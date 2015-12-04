@@ -177,15 +177,116 @@
 
     
     
+
+    
       
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/04/原型Prototype-2/" itemprop="url">
+                  未命名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-04T16:34:02+08:00" content="2015-12-04">
+              2015-12-04
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
       
-        
-        
-        
       
 
       
-    
+        
+          <span itemprop="articleBody">
+            
+              <p>#原型prototype[2]<br> 前面说了介绍了原型，这一部分说说原型的一大作用：继承。在面向对象中，继承有两种方法，分别是接口继承和实现继承。但是在JavaScript中，函数不能只签名，所以JavaScript中只有实现继承。</p>
+<blockquote>
+<p>JavaScript继承的基本思路就是让一个引用类型继承另一个引用类型的属性和方法。    </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.property = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line">SuperType.prototype.getSuperValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.property;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.subproperty = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//继承SuperType</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line">SubType.prototype.getSubValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.subproperty;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instance.getSupterValue());	<span class="comment">//print: true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先我们先来看下上面函数之间的关系，如下图：  </p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/prototype/prototypeThird.png" alt="上面代码的原型关系图">  </p>
+<p>  1 由上面的图我们可以看到，继承其实就是通过改写原型实现的。我们将SubperType的一个实例赋值给SubType.prototype，使得SubType.prototoype含有指向SuperType.prototype的指针，这样就将原型之间的关系联系起来，构成了原型链(prootype chain)。<br>  2 注意观察，可以发现在SubType.prototype原型中含有SubType构造函数中的属性property。这是因为SubType.prototype是作为SuperType的一个实例，所以自然保存有SuperType实例中的属性，但是对于getSuperValue方法则还是保存在SuperType.prototype中。<br>  3 SubType.prototype中含有的属性都是共享的，所以对于property属性，如果SubType有多个实例则是共享该属性值。<br>  4 原型继承之后的原型搜索，还是和之前一样，先搜索实例对象的属性，然后在沿着原型链逐步向上搜索，如果最后还是没有找到则直接返回undefined。<br>  5 在JavaScript中，所有的对象都是继承自Object，所以所有函数的默认原型都是Object的实例，因此默认原型都会有一个内部指针，指向Object.prototype。这也是为什么每一个函数都会有toString(), valueOf()等默认方法的基本原因。<br>  6 对于使用原型继承的时候，不能使用字面量的形式来重写原型，如：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.property = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line">SuperType.prototype.getSuperValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.property;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.subproperty = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//继承SuperType</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line"><span class="comment">//使用字面量添加新方法，相当于重写了原型，会上面一行代码无效</span></span><br><span class="line">SubType.prototype = &#123;</span><br><span class="line">	getSubValue: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.subproperty;</span><br><span class="line">	&#125;,</span><br><span class="line">	someOtherMethod: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instance.getSuperValue());	<span class="comment">//print: error!找不到该方法</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>1 上面的代码首先将SubType.prototype赋值为SuperType的实例，这个时候是建立了继承关系；但是在后面又重写了SubType.prototype，这时候SubType.prototype变成了Object对象的一个实例，因此SubType和SuperType之间的关系已经被切断，两者之间没有了关系。 </p>
+</blockquote>
+<p>###原型链存在的问题<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.color = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//继承了SuperType</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceFirst = <span class="keyword">new</span> SubType();</span><br><span class="line">instanceFirst.color.push(<span class="string">'black'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.color);			<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceSecond = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.color);		<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>首先还是来看下函数原型之间的关系，如下图：  </p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/prototype/prototypeForth.png" alt="上面代码的原型关系图">  </p>
+<blockquote>
+<p>有上面的图可以看到，由于SubType.prototype是作为SuperType的实例，所以在SubType.prototype中保存有一份SuperType实例对象都具有的属性，即color属性。这就会导致SubType的所有实例都共享一份color；<br>有因为在原型中额所有属性都是共享的，所以在SubType的实例中都能引用到color的属性值。因此我们可以看到在instanceFirst和instanceSecond都是共享同一个color数组，这也就是为什么instanceFirst改变了color的值之后，instanceSecond的color数组也跟着改变的原因。<br>原型链继承存在的问题：通过原型继承，原型实际上是变成另一个类型的实例，于是原先的实例属性也就顺理成章的变成了现在原型的属性。 </p>
+</blockquote>
+<p>###原型链问题的解决方法<br>1 对于从SuperType构造函数继承下来的属性到原型中的问题，可以通过在SubType的构造函数中调用SuperType构造函数。可以通过call和apply来实现。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//继承SuperType</span></span><br><span class="line">	<span class="comment">//在this的作用域上调用SuperType构造函数</span></span><br><span class="line">	SuperType.call(<span class="keyword">this</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceFirst = <span class="keyword">new</span> SubType();</span><br><span class="line">instanceFirst.colors.push(<span class="string">'black'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.colors);		<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceSecond = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.colors);		<span class="comment">//print: ['red', 'blue', 'green']</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面的这种方法通常称之为经典继承方法，但是该方法还是存在构造函数模式的缺点，即所有的方法都在构造函数中定义，因此函数的复用就无从谈起。因此很多情况下都是使用下面的一种方法：组合继承。  </p>
+</blockquote>
+<p>2 组合继承即在上面的额方法中添加如原型链的形式。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>];</span><br><span class="line">&#125;;</span><br><span class="line">SuperType.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params">name, age</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//继承SuperType属性</span></span><br><span class="line">	SuperType.call(<span class="keyword">this</span>, name);</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;;</span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line">SubType.prototype.sayAge()&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.age);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceFirst = <span class="keyword">new</span> SubType(<span class="string">"Louis"</span>, <span class="number">23</span>);</span><br><span class="line">instanceFirst.colors.push(<span class="string">'black'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.colors);		<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.sayName());		<span class="comment">//print: Louis</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.sayAge());		<span class="comment">//print: 23</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceSecond = <span class="keyword">new</span> SubType(<span class="string">"June"</span>, <span class="number">21</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.colors);		<span class="comment">//print: ['red', 'blue', 'green']</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.sayName());	<span class="comment">//print: June</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.sayAge());		<span class="comment">//print：21</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这种方法避免了原型链和经典继承的弊端，因此较为常用。</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -785,7 +886,124 @@
             
               
                 
-                <a class="post-title-link" href="/2015/12/02/原型Prototyp-1/" itemprop="url">
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-5/" itemprop="url">
+                  Array数组[5]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[5]数组API[4]">[5]数组API[4]</h1><h3 id="Iteration_Methods">Iteration Methods</h3><p>1 这部分将要介绍的API主要是以下几个：</p>
+<blockquote>
+<p>Array.prototype.forEach()<br>Array.prototype.every()<br>Array.prototype.some()<br>Array.prototype.filter()<br>Array.prototype.map()<br>Array.prototype.reduce()<br>Array.prototype.reduceRight()  </p>
+</blockquote>
+<p>*上面列举的API都是用于遍历数组，这一部分的API比较容易混淆，需要理解清楚。</p>
+<h4 id="Array-prototype-forEach()">Array.prototype.forEach()</h4><blockquote>
+</blockquote>
+<h4 id="Array-prototype-every()">Array.prototype.every()</h4><blockquote>
+</blockquote>
+<h4 id="Array-prototype-some()">Array.prototype.some()</h4><blockquote>
+</blockquote>
+<h4 id="Array-prototype-filter()">Array.prototype.filter()</h4><blockquote>
+</blockquote>
+<p>####Array.prototype.map()</p>
+<blockquote>
+</blockquote>
+<p>####Array.prototype.reduce()</p>
+<blockquote>
+</blockquote>
+<p>####Array.prototype.reduceRight()</p>
+<blockquote>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/原型Prototype-1/" itemprop="url">
                   原型Prototyp[1]
                 </a>
               
@@ -1364,236 +1582,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/23/DOM事件系列-3/" itemprop="url">
-                  DOM事件系列[3]
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            發表於
-            <time itemprop="dateCreated" datetime="2015-11-23T08:36:21+08:00" content="2015-11-23">
-              2015-11-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分類於
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="[3]Event对象">[3]Event对象</h1><ol>
-<li>Event对戏那个在event第一次出发的事后就被创建出来，并且一直伴随着事件在DOM结构中流转整个生命周期。event对象会被作为第一个参数传递给事件监听的回调函数。event对象具有以下的属性:  </li>
-</ol>
-<blockquote>
-<p>type(String)        – 事件的名称<br>  target(node)        – 事件起源的DOM节点<br>  currentTarget(node) – 当前回调函数被触发的DOM节点<br>  bubbles(boolean)    – 指明该事件是否是一个冒泡事件(需要注意的是：不是所有的事件都是可以冒泡的)<br>  cancelable(boolean) – 指明这个事件的默认行为是否可以通过调用preventDefault()  來阻止，也就是只有当cancelable为true的时候，调用preventDefault方法才能生效<br>  eventPhase(number)  – 指明当前事件所处的阶段(phase)，none(0), capturing(1), target(2), bubbling(3)<br>  timestamp(number)   – 事件发生的事件<br>  defaultPrevented(boolean) – 指明当前事件对象都额preventDefault方法是否被调用过<br>  preventDefault(function)  – 这个方法将阻止浏览器中用户代理对当前事件的相关默认行为。<br>  stopPropagation(function) – 这个方法将阻止当前事件链上后面的元素的回调函数被触发，当前节点上针对此事件的其他回调函数依然会被触发。<br>  stopImmediatePropagation(function) – 这个方法将阻止当前事件链上所有回调函数被触发，也包括当前针对此事件已绑定的其他回调函数。     </p>
-</blockquote>
-<p><a href="http://jsfiddle.net/Louis_Tsang/vovnpLga/" target="_blank" rel="external">具体案例</a><br><a href="http://jsfiddle.net/Louis_Tsang/vovnpLga/1/" target="_blank" rel="external">更改版本案例</a>  </p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/23/DOM事件系列-2/" itemprop="url">
-                  DOM事件系列[2]
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            發表於
-            <time itemprop="dateCreated" datetime="2015-11-23T08:35:40+08:00" content="2015-11-23">
-              2015-11-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分類於
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="[2]事件传播与冒泡">[2]事件传播与冒泡</h1><h3 id="1-事件传播">1.事件传播</h3><p>在web发展的早期，出现了如下的困惑：当我们在网页中点击某一区域的时候，是哪个DOM元素和我们进行相互交互。我们都知道，HTML采用的是树级嵌套结构，当我们点击某一个元素的时候，该元素的父元素同样被点击。可以说任何一个元素被点击，<body>和<html>标签都一样被点击。为了解决这个问题，网景Netscape和微软分别提出了不同的方法。  </html></body></p>
-<blockquote>
-<p>1.Netscape的解决方法：  </p>
-<ul>
-<li>当元素事件被激活的时候，事件总是从DOM树的最高层对象开始依次往下。也就是说任何一个元素事件发生，最先开始捕获的事件的是document，然后是html，再接着则是body，依次往下。  </li>
-<li>网景的这种处理方式称之为事件捕获即Event Capturing.  </li>
-</ul>
-<p>2.微软Internet Explorer的解决方法<br>  IE的解决方法和网景的截然相反。当一个事件发生的时候，最先发生在绑定该事件的元素上，接着再依次向上冒泡。也就是当一个元素事件发生的时候，最先开始监测到事件的是绑定时间段额元素，接着才是该元素的父元素，依次到body、html，最后到document。<br>  IE的这种事件处理方式称之为事件冒泡即Event Bubble.  </p>
-</blockquote>
-<p>后来W3C在定义DOM Level 2 Events的时候，将一个事件发生的过程定义了三个过程，分别是Event Capturing Phase，Event Target Phase，Event Bubble Phase。如下图所示：<br><img src="http://jbcdn2.b0.upaiyun.com/2013/12/eventflow.png" alt="事件传播示意图">  </p>
-<p>在DOM Level 0 Events中的两种定义事件方式，在处理事件的时候都是采用事件冒泡的方式进行。而DOM Level 2 Events则可以选择事件是在捕获阶段还是冒泡阶段处理(由addEventListener()函数中的第三个参数决定)。  </p>
-<p>Example:  </p>
-<blockquote>
-<p>1.事件捕获、目标、冒泡三个阶段  </p>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">li</span>&gt;</span>Click Me!<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _div = <span class="built_in">document</span>.querySelector(<span class="string">"div"</span>);</span><br><span class="line"><span class="keyword">var</span> _ul = <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>);</span><br><span class="line"><span class="keyword">var</span> _li = <span class="built_in">document</span>.querySelector(<span class="string">"li"</span>);</span><br><span class="line"><span class="comment">//Capturing Phase</span></span><br><span class="line">_div.addEventListener(<span class="string">"click"</span>, callback, <span class="literal">true</span>);</span><br><span class="line">_ul.addEventListener(<span class="string">"click"</span>, callback, <span class="literal">true</span>);</span><br><span class="line">_li.addEventListener(<span class="string">"click"</span>, callback, <span class="literal">true</span>);</span><br><span class="line"><span class="comment">//Bubble Phase</span></span><br><span class="line">_div.addEventListener(<span class="string">"click"</span>, callback, <span class="literal">false</span>);</span><br><span class="line">_ul.addEventListener(<span class="string">"click"</span>, callback, <span class="literal">false</span>);</span><br><span class="line">_li.addEventListener(<span class="string">"click"</span>, callback, <span class="literal">false</span>);</span><br><span class="line"><span class="comment">//callback function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> event = event || <span class="built_in">window</span>.event;</span><br><span class="line">    <span class="keyword">var</span> _currentTarget = event.currentTarget</span><br><span class="line">    alert(_currentTarget + <span class="string">" capturing"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>具体案例<a href="http://jsfiddle.net/Louis_Tsang/bdcmjjfe/" target="_blank" rel="external">点击查看</a>  </p>
-<h3 id="2-事件冒泡的使用">2.事件冒泡的使用</h3><p>事件冒泡有其好处和弊端。在这一小节我们先来看看事件冒泡该如何使用？</p>
-<blockquote>
-<p>当需要对多个元素进行事件绑定的时候，如果仍然采用之前我们所说的方法，则会造成内存负担，同时也会是JavaScript的执行速度越来越慢。如：  </p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"help-btn"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">	openHelp();</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"save-btn"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">	saveDocument();</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"undo-btn"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">	undoChanges();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>如果有100个元素需要绑定事件，按照这种方法我们需要写100个事件绑定，这显然是不现实的。对于这种情况我们应该使用事件代理(Event Delegation，又译为：事件委托)的方式来解决。Event Delegation利用的原理就是事件冒泡Bubbling。  </p>
-<blockquote>
-<p>事件代理就是利用事件冒泡在DOM最高层次(通常是document)对事件进行处理。当我们需要对很多元素添加事件的时候，可以通过将事件添加到它们的父节点而将事件委托给父节点来触发处理函数。<br>当事件在父节点处理的时候，我们需要知道的是哪个子节点触发了事件，这可以通过子节点的特性进行判断，如target.id子节点的id，target.className子节点的类名，target.nodeName子节点的名称等。<br>所以对于上面的例子，我们可以使用事件代理改写成：</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//IE不会传入event参数</span></span><br><span class="line">	<span class="keyword">var</span> event = event || <span class="built_in">window</span>.event;</span><br><span class="line">	<span class="comment">//IE 使用的是srcElement作为原始事件对象</span></span><br><span class="line">	<span class="keyword">var</span> target = event.target || event.srcElement;</span><br><span class="line">	<span class="keyword">switch</span>(target.id)&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">"help-btn"</span>:</span><br><span class="line">			openHelp();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">"save-btn"</span>:</span><br><span class="line">			saveDocument();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">"undo-btn"</span>:</span><br><span class="line">			undoChanges();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>另外，也可以通过库进行处理。JQuery库就有处理事件代理的相应函数。  </p>
-</blockquote>
-<h3 id="3-阻止事件冒泡">3.阻止事件冒泡</h3><p>现在我们考虑下这种情况，html代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>Click me!<span class="tag">&lt;/<span class="title">P</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>在div标签下，我们需要绑定一个点击事件，该事件用于处理div标签，假设需要输出：这是一个DIV标签。<br>而在p标签，我们同样需要绑定一个点击事件，该事件用于处理P标签，假设需要输出：这是DIV标签下的P标签。<br>在正常的事件过程中，当点击P之后，事件会向上冒泡，引起div标签的click事件发生。但是这不是我们所要的效果，我们需要的是点击P标签的时候只执行p标签绑定的点击事件，于div绑定的点击事件无关。这时候就需要用到stopPropagation()函数，它能阻止当前元素的事件向上冒泡。<br><a href="http://jsfiddle.net/Louis_Tsang/wj4ojgwd/" target="_blank" rel="external">Example点击查看</a><br><a href="http://jsfiddle.net/Louis_Tsang/vbhvzfhr/" target="_blank" rel="external">Example点击查看</a><br>第一个例子中没有阻止事件冒泡，第二个例子中添加了阻止事件冒泡的函数stopPropagation();  </p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1640,7 +1628,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
