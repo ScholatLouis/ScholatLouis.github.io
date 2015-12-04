@@ -177,15 +177,131 @@
 
     
     
+
+    
       
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/04/原型Prototype-2/" itemprop="url">
+                  原型Prototype[2]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-04T16:38:57+08:00" content="2015-12-04">
+              2015-12-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
       
-        
-        
-        
       
 
       
-    
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="原型prototype[2]">原型prototype[2]</h1><p> 前面说了介绍了原型，这一部分说说原型的一大作用：继承。在面向对象中，继承有两种方法，分别是接口继承和实现继承。但是在JavaScript中，函数不能只签名，所以JavaScript中只有实现继承。</p>
+<blockquote>
+<p>JavaScript继承的基本思路就是让一个引用类型继承另一个引用类型的属性和方法。    </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.property = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line">SuperType.prototype.getSuperValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.property;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.subproperty = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//继承SuperType</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line">SubType.prototype.getSubValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.subproperty;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instance.getSupterValue());	<span class="comment">//print: true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先我们先来看下上面函数之间的关系，如下图：  </p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/prototype/prototypeThird.png" alt="上面代码的原型关系图">  </p>
+<p>  1 由上面的图我们可以看到，继承其实就是通过改写原型实现的。我们将SubperType的一个实例赋值给SubType.prototype，使得SubType.prototoype含有指向SuperType.prototype的指针，这样就将原型之间的关系联系起来，构成了原型链(prootype chain)。<br>  2 注意观察，可以发现在SubType.prototype原型中含有SubType构造函数中的属性property。这是因为SubType.prototype是作为SuperType的一个实例，所以自然保存有SuperType实例中的属性，但是对于getSuperValue方法则还是保存在SuperType.prototype中。<br>  3 SubType.prototype中含有的属性都是共享的，所以对于property属性，如果SubType有多个实例则是共享该属性值。<br>  4 原型继承之后的原型搜索，还是和之前一样，先搜索实例对象的属性，然后在沿着原型链逐步向上搜索，如果最后还是没有找到则直接返回undefined。<br>  5 在JavaScript中，所有的对象都是继承自Object，所以所有函数的默认原型都是Object的实例，因此默认原型都会有一个内部指针，指向Object.prototype。这也是为什么每一个函数都会有toString(), valueOf()等默认方法的基本原因。<br>  6 对于使用原型继承的时候，不能使用字面量的形式来重写原型，如：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.property = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line">SuperType.prototype.getSuperValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.property;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.subproperty = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//继承SuperType</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line"><span class="comment">//使用字面量添加新方法，相当于重写了原型，会上面一行代码无效</span></span><br><span class="line">SubType.prototype = &#123;</span><br><span class="line">	getSubValue: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.subproperty;</span><br><span class="line">	&#125;,</span><br><span class="line">	someOtherMethod: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instance.getSuperValue());	<span class="comment">//print: error!找不到该方法</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>1 上面的代码首先将SubType.prototype赋值为SuperType的实例，这个时候是建立了继承关系；但是在后面又重写了SubType.prototype，这时候SubType.prototype变成了Object对象的一个实例，因此SubType和SuperType之间的关系已经被切断，两者之间没有了关系。 </p>
+</blockquote>
+<h3 id="原型链存在的问题">原型链存在的问题</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.color = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//继承了SuperType</span></span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceFirst = <span class="keyword">new</span> SubType();</span><br><span class="line">instanceFirst.color.push(<span class="string">'black'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.color);			<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceSecond = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.color);		<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先还是来看下函数原型之间的关系，如下图：  </p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/prototype/prototypeForth.png" alt="上面代码的原型关系图">  </p>
+<blockquote>
+<p>有上面的图可以看到，由于SubType.prototype是作为SuperType的实例，所以在SubType.prototype中保存有一份SuperType实例对象都具有的属性，即color属性。这就会导致SubType的所有实例都共享一份color；<br>有因为在原型中额所有属性都是共享的，所以在SubType的实例中都能引用到color的属性值。因此我们可以看到在instanceFirst和instanceSecond都是共享同一个color数组，这也就是为什么instanceFirst改变了color的值之后，instanceSecond的color数组也跟着改变的原因。<br>原型链继承存在的问题：通过原型继承，原型实际上是变成另一个类型的实例，于是原先的实例属性也就顺理成章的变成了现在原型的属性。 </p>
+</blockquote>
+<h3 id="原型链问题的解决方法">原型链问题的解决方法</h3><p>1 对于从SuperType构造函数继承下来的属性到原型中的问题，可以通过在SubType的构造函数中调用SuperType构造函数。可以通过call和apply来实现。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//继承SuperType</span></span><br><span class="line">	<span class="comment">//在this的作用域上调用SuperType构造函数</span></span><br><span class="line">	SuperType.call(<span class="keyword">this</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceFirst = <span class="keyword">new</span> SubType();</span><br><span class="line">instanceFirst.colors.push(<span class="string">'black'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.colors);		<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceSecond = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.colors);		<span class="comment">//print: ['red', 'blue', 'green']</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面的这种方法通常称之为经典继承方法，但是该方法还是存在构造函数模式的缺点，即所有的方法都在构造函数中定义，因此函数的复用就无从谈起。因此很多情况下都是使用下面的一种方法：组合继承。  </p>
+</blockquote>
+<p>2 组合继承即在上面的额方法中添加如原型链的形式。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.colors = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>];</span><br><span class="line">&#125;;</span><br><span class="line">SuperType.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params">name, age</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//继承SuperType属性</span></span><br><span class="line">	SuperType.call(<span class="keyword">this</span>, name);</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;;</span><br><span class="line">SubType.prototype = <span class="keyword">new</span> SuperType();</span><br><span class="line">SubType.prototype.sayAge()&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.age);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceFirst = <span class="keyword">new</span> SubType(<span class="string">"Louis"</span>, <span class="number">23</span>);</span><br><span class="line">instanceFirst.colors.push(<span class="string">'black'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.colors);		<span class="comment">//print: ['red', 'blue', 'green', 'black']</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.sayName());		<span class="comment">//print: Louis</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceFirst.sayAge());		<span class="comment">//print: 23</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instanceSecond = <span class="keyword">new</span> SubType(<span class="string">"June"</span>, <span class="number">21</span>);</span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.colors);		<span class="comment">//print: ['red', 'blue', 'green']</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.sayName());	<span class="comment">//print: June</span></span><br><span class="line"><span class="built_in">console</span>.log(instanceSecond.sayAge());		<span class="comment">//print：21</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这种方法避免了原型链和经典继承的弊端，因此较为常用。</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -340,6 +456,1125 @@
 <p>*. <a href="">遍历数组API(Iteration Methods)</a></p>
 <blockquote>
 <p>Array.prototype.forEach()<br>Array.prototype.every()<br>Array.prototype.some()<br>Array.prototype.filter()<br>Array.prototype.map()<br>Array.prototype.reduce()<br>Array.prototype.reduceRight()</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-2/" itemprop="url">
+                  Array数组[2]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[2]数组API[1]">[2]数组API[1]</h1><h4 id="Array-prototype">Array.prototype</h4><blockquote>
+<p>Array.prototype属性代表了数组Array构造器的原型链。如果需要自行拓展数组函数，需要将函数指向Array.prototype链上。<br>使用Array.isArray(Array.prototype)返回的结果为true</p>
+</blockquote>
+<h4 id="Array-prototype-length">Array.prototype.length</h4><blockquote>
+<p>获取数组的长度：arr.length；数组的最大长度为2的32次方，即Math.pow(2,32)</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> temp = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(temp.length);		<span class="comment">//打印：5</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常用于遍历数组的时候，提供退出条件</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.length; ++i)&#123;</span><br><span class="line">	numbers[i] *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Array-isArray()">Array.isArray()</h4><blockquote>
+<p>用于判断一个对象是否为数组，如果是则返回true，否则返回false。<br>语法：Array.isArray(obj)</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下都是返回true</span></span><br><span class="line"><span class="built_in">Array</span>.isArray([]);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="built_in">Array</span>.prototype);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="keyword">new</span> <span class="built_in">Array</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">//以下都是返回false</span></span><br><span class="line"><span class="built_in">Array</span>.isArray();</span><br><span class="line"><span class="built_in">Array</span>.isArray(&#123;&#125;);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="literal">null</span>);</span><br><span class="line"><span class="built_in">Array</span>.isArray(<span class="literal">undefined</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Array.isArray()只在IE9及其之上版本才支持，对于需要在IE9以下的版本，这需要使用以下兼容性代码：</p>
+</blockquote>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray)&#123;</span><br><span class="line">	<span class="built_in">Array</span>.isArray = <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(arg) === <span class="string">'[object Array]'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="typeof_VS-_instanceof">typeof VS. instanceof</h3><ol>
+<li>typeof操作符</li>
+</ol>
+<blockquote>
+<p>语法：typeof operand<br>参数：operand是一个表达式，表示对象或原始值<br>常见的类型及其返回值，如下：</p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/typeof/typeofFirst.png" alt="常见类型及其返回值"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回"number"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">37</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">3.14</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.LN2</span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">Infinity</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>			<span class="comment">//NaN是"Not-A-Number"的缩写，意思是不是一个数字，其返回结果为："number"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Number</span>(<span class="number">1</span>)		<span class="comment">//不建议这么使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"string"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">""</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">"bla"</span></span><br><span class="line"><span class="keyword">typeof</span> (<span class="keyword">typeof</span> <span class="number">1</span>)</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">String</span>(<span class="string">"Louis"</span>)	<span class="comment">//不建议这么使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"boolean"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>)		<span class="comment">//不建议这么使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"undefined"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">typeof</span> blabla				<span class="comment">//对于没有定义的变量，自然是Undefined类型；对于一个定义了，但是没有赋值的变量也为Undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"object"</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;a: <span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line"><span class="comment">//下面的三种用法不建议，容易和上面的发生混淆</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"Louis"</span>)</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">21</span>)</span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回"function"</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.sin</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>instanceof操作符</li>
+</ol>
+<blockquote>
+<p>语法：object instanceof constructor<br>参数：object需要检测的对象; constructor构造函数<br>instanceof是用于检测对象object是否在构造函数constructor原型属性(prototype property)的原型链(prototype chain)上。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">D</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objC = <span class="keyword">new</span> C();</span><br><span class="line">objC <span class="keyword">instanceof</span> C; 				<span class="comment">//true</span></span><br><span class="line">objD <span class="keyword">instanceof</span> D;				<span class="comment">//false</span></span><br><span class="line">objC <span class="keyword">instanceof</span> <span class="built_in">Object</span>; 			<span class="comment">//true, 通过继承</span></span><br><span class="line">C.prototype insanceof <span class="built_in">Object</span>;		<span class="comment">//true 	</span></span><br><span class="line"></span><br><span class="line">C.prototype = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> objC2 = <span class="keyword">new</span> C();</span><br><span class="line">objC2 <span class="keyword">instanceof</span> C;				<span class="comment">//true</span></span><br><span class="line">objC <span class="keyword">instanceof</span> C;				<span class="comment">//true,因为原型已经改写，切断了原来实例与原型最初的关系</span></span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-3/" itemprop="url">
+                  Array数组[3]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[3]数组API[2]">[3]数组API[2]</h1><h3 id="Mutator_Methods">Mutator Methods</h3><p>1 这个部分介绍的API主要有以下几个：</p>
+<blockquote>
+<p>Array.prototype.pop()<br>Array.prototype.push()<br>Array.prototype.shift()<br>Array.prototype.unshift()<br>Array.prototype.reverse()<br>Array.prototype.sort()<br>Array.prototype.splice()</p>
+</blockquote>
+<p>*上面所列举的数组API都会改变当前操作的数组内容。</p>
+<h4 id="Array-prototype-pop()">Array.prototype.pop()</h4><blockquote>
+<p>该方法删除数组的最后一个元素，并且返回被删除的元素。[在原来的数组上操作，且有返回值]<br>语法：arr.pop();</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> temp = arr.pop();</span><br><span class="line"><span class="built_in">console</span>.log(temp);		<span class="comment">//print: 4</span></span><br><span class="line"><span class="built_in">console</span>.log(arr);			<span class="comment">//print: [1,2,3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于一个空数组，pop元素会返回undefined</span></span><br><span class="line"><span class="built_in">console</span>.log([].pop());	<span class="comment">//print: undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-push()">Array.prototype.push()</h4><blockquote>
+<p>该方法将一个或者多个元素插入到数组的最后位置，并且返回新数组的长度。[在原来的数组上操作，并且有返回值]<br>语法：arr.push(element1[, element2, … , elementN]);</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sports = [<span class="string">'soccer'</span>, <span class="string">'baseball'</span>];</span><br><span class="line"><span class="keyword">var</span> total = sports.push(<span class="string">'football'</span>, <span class="string">'swimming'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(sports);		<span class="comment">//print: ['soccer', 'baseball', 'football', 'swimming']</span></span><br><span class="line"><span class="built_in">console</span>.log(total);		<span class="comment">//print: 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个数组比较</span></span><br><span class="line"><span class="keyword">var</span> vegetables = [<span class="string">'parsnip'</span>, <span class="string">'potato'</span>];</span><br><span class="line"><span class="keyword">var</span> moreVegs = [<span class="string">'celery'</span>, <span class="string">'beetroot'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(vegetables.push(moreVegs));	<span class="comment">//print: ['parsnip', 'potato', Array[2]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用apply合并两个数组</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(vegetables, moreVegs);</span><br><span class="line"><span class="built_in">console</span>.log(vegetables);					<span class="comment">//print: ['parsnip', 'potato', 'celery', 'beetroot']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-shift()">Array.prototype.shift()</h4><blockquote>
+<p>该方法将数组的第一个元素移除，并且返回被移除的数组。[在原来的数组上操作，并且有返回值]<br>语法：arr.shift();</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFish = [<span class="string">'angel'</span>, <span class="string">'clown'</span>, <span class="string">'mandarin'</span>, <span class="string">'surgeon'</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'myFish before: '</span> + myFish);			<span class="comment">//print: myFish before: ["angel", "clown", "mandarin", "surgeon"]</span></span><br><span class="line"><span class="keyword">var</span> shifted = myFish.shift(); </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'myFish after: '</span> + myFish); 		 	<span class="comment">//print: myFish after: ["clown", "mandarin", "surgeon"]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Removed this element: '</span> + shifted); 	<span class="comment">//print: Removed this element: angel</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对于一个空数组，shift会返回undefined</span></span><br><span class="line"><span class="built_in">console</span>.log([].shift());							<span class="comment">//print: Undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-unshift()">Array.prototype.unshift()</h4><blockquote>
+<p>该方法将一个或者多个元素插入到数组的第一个位置，并且返回新数组的长度。[在原来的数组上操作，并且有返回值]<br>语法：arr.unshift(element1[, element2, …, elementN]);</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line">arr.unshift(<span class="number">0</span>); 			<span class="comment">// result of call is 3, the new array length; arr is [0, 1, 2]</span></span><br><span class="line">arr.unshift(-<span class="number">2</span>, -<span class="number">1</span>); 		<span class="comment">// = 5; arr is [-2, -1, 0, 1, 2]</span></span><br><span class="line">arr.unshift([-<span class="number">3</span>]);		<span class="comment">// arr is [[-3], -2, -1, 0, 1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//合并两个数组</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.unshift.apply([<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]);	<span class="comment">//the new arr is [1,2,3,4]</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-reverse()">Array.prototype.reverse()</h4><blockquote>
+<p>该方法将数组中所有元素的位置进行反转。[在原来的数组上操作，并且有返回值]<br>语法：arr.reverse()</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArray = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>];</span><br><span class="line">myArray.reverse();</span><br><span class="line"><span class="built_in">console</span>.log(myArray) 		<span class="comment">//print: ['three', 'two', 'one']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-sort()">Array.prototype.sort()</h4><blockquote>
+<p>该方法对数组中所有的元素都进行排序，如果没有提供比较函数compareFunction，则按照字符串的Unicode码的顺序进行排序。[在原来的数组上操作，并且有返回值]<br>语法：arr.sort([compareFunction])</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比较函数没有提供的情况下：</span></span><br><span class="line"><span class="keyword">var</span> fruit = [<span class="string">'cherries'</span>, <span class="string">'apples'</span>, <span class="string">'bananas'</span>];</span><br><span class="line">fruit.sort();		<span class="comment">//['apples', 'bananas', 'cherries'];</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> scores = [<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>, <span class="number">21</span>];		</span><br><span class="line">scores.sort();	<span class="comment">//[1, 10, 2, 21]	//没有提供比较函数，都是转化成字符串，然后根据字符串的Unicode码进行排序</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> things = [<span class="string">'word'</span>, <span class="string">'Word'</span>, <span class="string">'1 Word'</span>, <span class="string">'2 Words'</span>];</span><br><span class="line">things.sort();	<span class="comment">//['1 Word', '2 Words', 'Word', 'word']</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>compareFunction(a, b)比较函数   </p>
+<ol>
+<li>注意：a，b分别代表数组中比较的两个元素，可以是数值、对象、数组等  </li>
+<li>如果compareFunction(a, b)返回的数值小于0，则a排在b的前面  </li>
+<li>如果compareFunction(a, b)返回的数值为0，则不对a和b进行交换位置。需要注意的是ESMAscript并没有对此行为做出保证，不同的浏览器可能会有不同的做法。  </li>
+<li>如果compareFunction(a, b)返回的数值大于0，则a排在b的后面<br>compareFunction(a, b)常见的形式如下：</li>
+</ol>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compare</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a is less than b by some ordering criterion)&#123;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(a is greater than b by the ordering criterion)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//a must be equal to b</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#25353;&#25968;&#20540;&#22823;&#23567;&#25490;&#24207;&#10;var numbers = [4, 2, 5, 1, 3];&#10;numbers.sort(function(a, b)&#123;&#10;&#9;return a - b;&#10;&#125;);&#10;console.log(numbers);&#9;&#9;&#9;//print: [1, 2, 3, 4, 5]&#10;&#10;//&#23545;&#20110;&#23545;&#35937;&#20063;&#21487;&#20197;&#25353;&#29031;&#20854;&#20013;&#30340;&#23646;&#24615;&#20540;&#36827;&#34892;&#25490;&#24207;&#10;var items = [&#10; &#123; name: &#39;Edward&#39;, value: 21 &#125;,&#10; &#123; name: &#39;Sharpe&#39;, value: 37 &#125;,&#10; &#123; name: &#39;And&#39;, value: 45 &#125;,&#10; &#123; name: &#39;The&#39;, value: -12 &#125;,&#10; &#123; name: &#39;Magnetic&#39; &#125;,&#10; &#123; name: &#39;Zeros&#39;, value: 37 &#125;&#10;];&#10;items.sort(function(a, b)&#123;&#10;&#9;if(a.value &#62; b.value)&#123;&#10;&#9;&#9;return 1;&#10;&#9;&#125;&#10;&#9;if(a.value &#60; b.value)&#123;&#10;&#9;&#9;return -1;&#10;&#9;&#125;&#10;&#9;return 0;&#10;&#125;);&#10;console.log(items);&#10;//-12, 21, 37, 45, undefined, 37; &#22240;&#20026;itesms[4]&#20013;&#30340;&#23545;&#35937;&#27809;&#26377;value&#23646;&#24615;&#65292;&#26080;&#27861;&#36827;&#34892;&#27604;&#36739;&#65292;&#25152;&#20197;&#21069;&#38754;&#30340;4&#20010;&#26159;&#25353;&#39034;&#24207;&#25490;&#22909;&#65292;&#26368;&#21518;&#20004;&#20010;&#36824;&#26159;&#21407;&#26469;&#30340;&#39034;&#24207;&#12290;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>字符串与数值运算小结：<br>console.log(+true);    //print: 1;<br>console.log(+false);    //print: 0;<br>‘90’ - 80;            //results: 10;<br>‘a’ - ‘b’;            //results: NaN;<br>+’90’;                //results: 90;<br>数值型字符串会先转换成数值再进行运算；而对于非数值型字符串由于无法转换成数值，所以做任何四则运算结果都是NaN  </p>
+</blockquote>
+<h4 id="Array-prototype-splice()">Array.prototype.splice()</h4><blockquote>
+<p>该方法可以对数组中已经存在元算进行删除，也可以添加元素到数组中。[在原来的数组上操作，并且有返回值]<br>语法：arr.splice(startIndex, deleteCount[, element1, element2, …, elementN])<br>startIndex: 改变数组的起始位置，如果startIndex大于数组的长度，则将数组的长度赋值给startIndex；如果startIndex为负数，则加上数组的长度。<br>deleteCount: 从startIndex开始，要删除元素的个数；如果deleteCount为0，则不删除数组中的元素，但是此时需要提供至少一个新的元素(即第三个参数)；如果deleteCount的数值大于startIndex后面元素的个数，则将从startIndex处开始，将数组后面的元素全部删除。<br>elementN: 要添加到数组中的元素，如果该参数为空则splice()值做删除操作。<br>return：返回值是被删除的元素，如果没有删除操作则返回空数组。 </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myFish = [<span class="string">'angel'</span>, <span class="string">'clown'</span>, <span class="string">'mandarin'</span>, <span class="string">'surgeon'</span>];</span><br><span class="line"><span class="keyword">var</span> removed = myFish.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="string">'drum'</span>);		<span class="comment">//myFish is ['angel', 'clown', 'drum', 'mandarin', 'surgeon']</span></span><br><span class="line">													<span class="comment">// removed is [], no elements removed</span></span><br><span class="line">removed = myFish.splice(<span class="number">3</span>, <span class="number">1</span>);					<span class="comment">// myFish is ['angel', 'clown', 'drum', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['mandarin']</span></span><br><span class="line">removed = myFish.splice(<span class="number">2</span>, <span class="number">1</span>, <span class="string">'trumpet'</span>);			<span class="comment">// myFish is ['angel', 'clown', 'trumpet', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['drum']</span></span><br><span class="line">removed = myFish.splice(<span class="number">0</span>, <span class="number">2</span>, <span class="string">'parrot'</span>, <span class="string">'anemone'</span>, <span class="string">'blue'</span>); </span><br><span class="line">													<span class="comment">// myFish is ['parrot', 'anemone', 'blue', 'trumpet', 'surgeon']</span></span><br><span class="line">											<span class="comment">// removed is ['angel', 'clown']</span></span><br><span class="line">removed = myFish.splice(<span class="number">3</span>, myFish.length);		<span class="comment">// myFish is ['parrot', 'anemone', 'blue']</span></span><br><span class="line">											<span class="comment">// removed is ['trumpet', 'surgeon']</span></span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-4/" itemprop="url">
+                  Array数组[4]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[4]数组API[3]">[4]数组API[3]</h1><h3 id="Accessor_Methods">Accessor Methods</h3><p>1 这部分将要介绍的API主要是以下几个：</p>
+<blockquote>
+<p>Array.prototype.concat()<br>Array.prototype.join()<br>Array.prototype.slice()<br>Array.prototype.toString()<br>Array.prototype.indexOf()<br>Array.prototype.lastIndexOf()  </p>
+</blockquote>
+<p>*上面列举的API都不会修改原来的数组</p>
+<h4 id="Array-prototype-concat">Array.prototype.concat</h4><blockquote>
+<p>由原来的数组和提供的参数组成一个新的数组，并返回。<br>语法：var newArr = oldArr.concat([element1, element2, element3, …, elementN]);<br>说明：   </p>
+<blockquote>
+<p>1 concat()函数并不会改变原来数组中的元素，但是会返回一个新的数组。<br>2 对于数组中含有对象引用，concat()函数只是进行浅复制(shallow copy)，即新数组和原来数组都是指向同一个对象。也就是说，一旦指向的对象被修改，则原来数组和新数组中相应的元素都会发生变化。<br>3 对于字符串和数值则是直接复制到新数组中。 </p>
+</blockquote>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> alpha = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>],</span><br><span class="line">    numeric = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> alphaNumeric = alpha.concat(numeric);</span><br><span class="line"><span class="built_in">console</span>.log(alphaNumeric); 	<span class="comment">//result: ['a', 'b', 'c', 1, 2, 3]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">    num2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">    num3 = [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>];</span><br><span class="line"><span class="keyword">var</span> nums = num1.concat(num2, num3);</span><br><span class="line"><span class="built_in">console</span>.log(nums); 			<span class="comment">//result: [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//指向对象引用</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;name: <span class="string">"Louis"</span>, age: <span class="number">23</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> objArr = [obj];</span><br><span class="line"><span class="keyword">var</span> newArr = objArr.concat();</span><br><span class="line"><span class="built_in">console</span>.log(objArr[<span class="number">0</span>].age);	<span class="comment">//result: 23</span></span><br><span class="line"><span class="built_in">console</span>.log(newArr[<span class="number">0</span>].age);	<span class="comment">//result: 23</span></span><br><span class="line"></span><br><span class="line">obj.age = <span class="number">24</span>;</span><br><span class="line"><span class="built_in">console</span>.log(objArr[<span class="number">0</span>].age);	<span class="comment">//result: 24</span></span><br><span class="line"><span class="built_in">console</span>.log(newArr[<span class="number">0</span>].age);	<span class="comment">//result: 24</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-join()">Array.prototype.join()</h4><blockquote>
+<p>该方法将数组转换成字符串，并返回该字符串。<br>语法：arr.join([separator=’,’])<br>separator: 分隔符是可选的，当没有传入分隔符的时候则数组返回的字符串中每个元素使用逗号,  进行分开；如果有传入分隔符，则按照分隔符分开。  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="string">'Wind'</span>, <span class="string">'Rain'</span>, <span class="string">'Fire'</span>];</span><br><span class="line"><span class="keyword">var</span> myVar1 = a.join();      <span class="comment">// assigns 'Wind,Rain,Fire' to myVar1</span></span><br><span class="line"><span class="keyword">var</span> myVar2 = a.join(<span class="string">', '</span>);  <span class="comment">// assigns 'Wind, Rain, Fire' to myVar2</span></span><br><span class="line"><span class="keyword">var</span> myVar3 = a.join(<span class="string">' + '</span>); <span class="comment">// assigns 'Wind + Rain + Fire' to myVar3</span></span><br><span class="line"><span class="keyword">var</span> myVar4 = a.join(<span class="string">''</span>);    <span class="comment">// assigns 'WindRainFire' to myVar4</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-slice()">Array.prototype.slice()</h4><blockquote>
+<p>该方法返回一个新的数组，新的数组是原来数组的部分浅复制(shadllow copy)。<br>语法：arr.slice([startIndex[, endIndex]])<br>startIndex: 当没有传入该参数则默认为0；如果传入的是负数，则加上数组长度；<br>endIndex: 当没有传入该参数则默认是数组的长度(arr.length)；如果传入的是负数，则加上数组的长度<br>需要注意的是截取的数组中不包括endIndex位置处的元素，即从startIndex到endIndex-1<br>对于对象引用，跟Array.prototype.concat()函数一样  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = [<span class="string">'Banana'</span>, <span class="string">'Orange'</span>, <span class="string">'Lemon'</span>, <span class="string">'Apple'</span>, <span class="string">'Mango'</span>];</span><br><span class="line"><span class="keyword">var</span> citrus = fruits.slice(<span class="number">1</span>, <span class="number">3</span>);		<span class="comment">// citrus = ['Orange','Lemon']</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-toString()">Array.prototype.toString()</h4><blockquote>
+<p>将数组组成一个字符串，并返回字符串。<br>语法：arr.toString()<br>与arr.join();得到的字符串一样  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = [<span class="string">'Banana'</span>, <span class="string">'Orange'</span>, <span class="string">'Lemon'</span>, <span class="string">'Apple'</span>, <span class="string">'Mango'</span>];</span><br><span class="line"><span class="keyword">var</span> temp = fruits.toString();		<span class="comment">//print: "Banana,Orange,Lemon,Apple,Mango"</span></span><br><span class="line"><span class="keyword">var</span> temp2 = fruits.join();		<span class="comment">//print: "Banana,Orange,Lemon,Apple,Mango"</span></span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-indexOf()">Array.prototype.indexOf()</h4><blockquote>
+<p>该方法从数组(由前往后，即从0到arr.length-1顺序)找查找某个元素，如果能找到则返回第一个相同元素在数组中的位置；如果没能找到则返回-1<br>语法：arr.indexOf(searchElement[, fromIndex = 0])<br>searchElement: 要在数组中查找的元素<br>fromIndex: 从某个位置开始查找，如果没有该参数则默认为0；如果fromIndex大于或者等于数组的长度，则直接返回-1；如果fromIndex小于0，则加上数组的长度，从结果值的位置开始查找，如果结果值还是小于0，则是整个数组查找。  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array = [<span class="number">2</span>, <span class="number">5</span>, <span class="number">9</span>];</span><br><span class="line">array.indexOf(<span class="number">2</span>);     <span class="comment">// 0</span></span><br><span class="line">array.indexOf(<span class="number">7</span>);     <span class="comment">// -1</span></span><br><span class="line">array.indexOf(<span class="number">9</span>, <span class="number">2</span>);  <span class="comment">// 2</span></span><br><span class="line">array.indexOf(<span class="number">9</span>, <span class="number">3</span>);	<span class="comment">//-1</span></span><br><span class="line">array.indexOf(<span class="number">2</span>, -<span class="number">1</span>); <span class="comment">// -1</span></span><br><span class="line">array.indexOf(<span class="number">2</span>, -<span class="number">3</span>); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//找到数组中某个元素的所有位置</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'a'</span>, <span class="string">'d'</span>];</span><br><span class="line"><span class="keyword">var</span> searchElement = <span class="string">'a'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indices = [];</span><br><span class="line"><span class="keyword">var</span> index = array.indexOf(searchElement);</span><br><span class="line"><span class="keyword">while</span>(index != -<span class="number">1</span>)&#123;</span><br><span class="line">	indices.push(index);</span><br><span class="line">	index = array.indexOf(searchElement, index + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(indices);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>indexOf()只在IE9及其以上支持，所以对于低版本的IE需要先实现indexOf()函数，如下：  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Array</span>.prototype.indexOf)&#123;</span><br><span class="line">	<span class="built_in">Array</span>.prototype.indexOf = <span class="function"><span class="keyword">function</span>(<span class="params">searchElement, fromIndex</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> k;</span><br><span class="line">		<span class="comment">//this是指向调用的函数</span></span><br><span class="line">		<span class="comment">//只有当this === undefined的时候才会 === void 0</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span> == <span class="literal">null</span> || <span class="keyword">this</span> === <span class="keyword">void</span> <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'"this" is null or not defined'</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//将函数转化成对象</span></span><br><span class="line">		<span class="keyword">var</span> O = <span class="built_in">Object</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//&gt;&gt;&gt;的两个作用：1)将非数值型转化成0；2)对于含有小数点的，只取其整数部分</span></span><br><span class="line">		<span class="keyword">var</span> len = O.length &gt;&gt;&gt; <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(len === <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据是否传入fromIndex进行取值</span></span><br><span class="line">		<span class="keyword">var</span> n = +fromIndex || <span class="number">0</span></span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">Math</span>.abs(n) === <span class="literal">Infinity</span>)&#123;</span><br><span class="line">			n = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(n &gt;= len)&#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//k其实是数组下标</span></span><br><span class="line">		k = <span class="built_in">Math</span>.max(n &gt;= <span class="number">0</span> ? n : len - <span class="built_in">Math</span>.abs(n), <span class="number">0</span>);</span><br><span class="line">		<span class="comment">//逐个数组元素进行比较</span></span><br><span class="line">		<span class="keyword">while</span>( k &lt; len )&#123;</span><br><span class="line">			<span class="keyword">if</span>(k <span class="keyword">in</span> O &amp;&amp; O[k] === searchElement)&#123;</span><br><span class="line">				<span class="keyword">return</span> k;</span><br><span class="line">			&#125;</span><br><span class="line">			K++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Array-prototype-lastIndexOf()">Array.prototype.lastIndexOf()</h4><blockquote>
+<p>从数组中查找指定的元素，如果存在则返回该元素第一次出现在数组中的位置，否则返回-1。需要注意的是查找的方向是从数组尾部往前，即arr.length到0<br>语法：arr.lastIndexOf(searchElement[, fromIndex = arr.length - 1])<br>searchElement: 要查找的值<br>fromIndex: 如果没有传入该参数则默认为arr.length数组长度；如果传入的数值大于或等于数组的长度，则对整个数组都进行查找；如果传入的是负数，则加上数组的长度，从结果值处开始查找，如果结果值还是负数则直接返回-1；需要注意的是对于有传入fromIndex，是从fromIndex处开始往前查找  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array = [<span class="number">2</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">2</span>];</span><br><span class="line">array.lastIndexOf(<span class="number">2</span>);     <span class="comment">// 3</span></span><br><span class="line">array.lastIndexOf(<span class="number">7</span>);     <span class="comment">// -1</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, <span class="number">3</span>);  <span class="comment">// 3</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, <span class="number">2</span>);  <span class="comment">// 0 注意结果不是 3</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, -<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line">array.lastIndexOf(<span class="number">2</span>, -<span class="number">1</span>); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/Array数组系列-5/" itemprop="url">
+                  Array数组[5]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:39:53+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[5]数组API[4]">[5]数组API[4]</h1><h3 id="Iteration_Methods">Iteration Methods</h3><p>1 这部分将要介绍的API主要是以下几个：</p>
+<blockquote>
+<p>Array.prototype.forEach()<br>Array.prototype.every()<br>Array.prototype.some()<br>Array.prototype.filter()<br>Array.prototype.map()<br>Array.prototype.reduce()<br>Array.prototype.reduceRight()  </p>
+</blockquote>
+<p>*上面列举的API都是用于遍历数组，这一部分的API比较容易混淆，需要理解清楚。</p>
+<h4 id="Array-prototype-forEach()">Array.prototype.forEach()</h4><blockquote>
+</blockquote>
+<h4 id="Array-prototype-every()">Array.prototype.every()</h4><blockquote>
+</blockquote>
+<h4 id="Array-prototype-some()">Array.prototype.some()</h4><blockquote>
+</blockquote>
+<h4 id="Array-prototype-filter()">Array.prototype.filter()</h4><blockquote>
+</blockquote>
+<p>####Array.prototype.map()</p>
+<blockquote>
+</blockquote>
+<p>####Array.prototype.reduce()</p>
+<blockquote>
+</blockquote>
+<p>####Array.prototype.reduceRight()</p>
+<blockquote>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/02/原型Prototype-1/" itemprop="url">
+                  原型prototype[1]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-12-02T16:38:57+08:00" content="2015-12-02">
+              2015-12-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <blockquote>
+<p>在看了不少资料之后，对于原型的理解就是两个字，共享。<br>  在这一部分，将通过分析原型出现的原因，已经原型的应用–&gt;继承。</p>
+</blockquote>
+<h3 id="原型Prototype的出现">原型Prototype的出现</h3><blockquote>
+<p>在讨论原型的出现，就需要从对象的创建开始说起。</p>
+</blockquote>
+<p>  创建对象可以通过new Object()或者直接通过对象字面量{}完成，但是使用这种方法会导致在创建多个对象的时候，产生大量的代码。因此有了工厂模式：</p>
+<ol>
+<li><p>工厂模式<br>工厂模式就是使用一个函数将需要创建的对象的属性都封装起来，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">	obj.name = name;</span><br><span class="line">	obj.age = age;</span><br><span class="line">	obj.job = job;</span><br><span class="line">	obj.alertName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = createPerson(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> PersonSecond = createPerson(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+<p>这样就可以通过工厂模式创建对象，只需要将参数传入到createPerson函数中，函数会返回一个obj初始化后的对象。需要注意的是，使用工厂模式创建的对象，不能解决对象识别问题，即：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">personFirst <span class="keyword">instanceof</span> object 	<span class="comment">//打印true</span></span><br><span class="line">personFirst <span class="keyword">instanceof</span> createPerson 	<span class="comment">//打印false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.job = job;</span><br><span class="line">	<span class="keyword">this</span>.alertName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>1.首先构造函数和普通的函数是没有什么不同<br>2.要把一个函数当成构造函数使用，只需要使用new操作符<br>3.根据习惯，构造函数的第一个字母使用大写</p>
+</blockquote>
+<ul>
+<li><p>new操作符创建对象的过程<br>创建一个新的对象 –&gt; 将构造函数的作用域赋给新对象(即this指向了新对象) –&gt; 对象的初始化 –&gt; 返回新对象</p>
+</li>
+<li><p>构造函数模式的不足</p>
+</li>
+</ul>
+<blockquote>
+<p>使用构造函数存在的最大问题就是每个实例都会将所有的属性创建一次。这个对于数值属性来说可以接受，但是如果函数方法每个实例都要创建一遍，则不合理。所以对于构造函数模式可以将方法转移到构造函数外部，如下：</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.job = job;</span><br><span class="line">	<span class="keyword">this</span>.sayName = sayName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但是对于这种方法，如果需要多个函数，则会导致很多个全局函数。对于构造函数模式的这个问题，我们可以通过原型来解决。</p>
+</blockquote>
+<ol>
+<li>原型模式<ul>
+<li>原型</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>在每个创建的函数中都会有一个原型prototype属性，这个属性是一个指针，指向一个对象。原型指向的这个对象包含可以由该函数创建的对象共享访问的属性和方法。简单的说就是该原型指向的对象中含有可以被共享访问的属性和方法，而只有该函数创建的实例才有权限访问。  </p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="comment">//构造函数prototype指向的原型对象</span></span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用构造函数创建的实例</span></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line">personFirst.sayName();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line">personSecond.sayName();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(personFirst.sayName == personSecond.sayName);	<span class="comment">//打印true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们在Person函数的原型中添加的所有属性和方法都能够被personFrist和personSecond访问，而且需要注意的是共享访问，而不是各自保存一个副本。  </p>
+</blockquote>
+<ul>
+<li>原型对象的理解<ol>
+<li>在创建了一个函数之后，JavaScript引擎就会为该函数创建一个prototype属性，这个属性指向原型对象。而原型对象中含有一个constructor的属性，这个属性指向含有原型对象所在的函数。就如之前的构造函数Person、Person.prototype、personFirst之间的关系如下图：<br><img src="http://123.56.156.116/Louis/prototype/prototypeFirst.png" alt="三者之间的关系示意图"></li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>由上图可以看到，其实实例和构造函数之间并没有直接的联系。每个实例中都含有[[prototype]]属性，这个属性指向Person.prototype这个原型对象，而Person.prototype原型对象中含有constructor属性则指向构造函数Person，构造函数也含有指向Person.prototype原型的属性prototype。<br>在personFirst中我们可以看到，该对象除了[[prototype]]属性之外，并没有其他的属性。但是我们能够通过personFirst.name得到“Louis”的值。这就是原型和对象实例查找属性的问题：</p>
+<blockquote>
+<p>一个对象在读取某个属性值的时候，首先是先查找该对象是否包含这个属性，如果有则返回，不再向原型查找；如果没有则向上查找该对象指向的原型是否含有这个属性，如果有则返回原型中该属性的值，如果没有则继续向继承的原型链上查找，如果还是没有则直接返回undefined。<br>对于上面的例子，在使用personFirst.name访问取name属性值的时候，首先先找personFirst这个对象上是否含有属性值name，很明显并没有，接着则personFirst的原型链Person.prototype上查找name属性，发现有，而且值为”Louis”，则将该值直接返回。</p>
+</blockquote>
+</blockquote>
+<ol>
+<li><p>原型属性的屏蔽：当我们在对象实例上创建一个和原型上相同名称的属性时，根据属性的查找顺序，我们可以知道原型上相同名称的属性将会被屏蔽掉。Show the fllowing code!</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="comment">//原型对象</span></span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Perosn.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line">personFirst.name = <span class="string">"John"</span>;</span><br><span class="line">personFirst.sayName()	<span class="comment">//打印: John	--&gt; 来自实例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line">personSecond.sayName()	<span class="comment">//打印：Louis	--&gt; 来自原型</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>当我们为对象添加一个属性的时候，这个属性就会屏蔽原型对象中的同名属性；也就是说如果添加的这个属性只会阻止我们访问原型中的那个对象，但是不会修改原型中的属性。不过，我们可以使用delete操作符来删除对象实例属性，从而恢复访问原型中的对象。</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line">person1.name = <span class="string">"June"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person1.name);	 	<span class="comment">//打印： June --&gt; 来自对象</span></span><br><span class="line"><span class="built_in">console</span>.log(person2.name);		<span class="comment">//打印： Louis--&gt; 来自原型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> person1.name;</span><br><span class="line"><span class="built_in">console</span>.log(person1.name); 		<span class="comment">//打印： Louis--&gt; 来自原型</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>in操作符<ol>
+<li>hasOwnProperty &amp;&amp; in 操作符<br>使用hasOwnProperty()方法可以检测是一个属性是存在于实例中，还是原型中。只有当给定的属性存在于对象实例中，才会返回true。而对于in操作符，则无论属性是否存在于实例还是原型中，只要能够访问到这个属性，则返回true。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用hasOwnProperty()方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(personFirst.hasOwnProperty(<span class="string">"name"</span>));	<span class="comment">//false	--&gt; 来自原型</span></span><br><span class="line"><span class="built_in">console</span>.log(personSecond.hasOwnProperty(<span class="string">"age"</span>));	<span class="comment">//false --&gt; 来自原型</span></span><br><span class="line"></span><br><span class="line">personFirst.name = <span class="string">"June"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(personFirst.hasOwnProperty(<span class="string">"name"</span>));	<span class="comment">//true --&gt; 来自对象实例</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//使用in操作符</span></span><br><span class="line">   	<span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">   	Person.prototype.name = <span class="string">"Louis"</span>;</span><br><span class="line">    Person.prototype.age = <span class="number">23</span>;</span><br><span class="line">    Person.prototype.job = <span class="string">"Student"</span>;</span><br><span class="line">    Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person();</span><br><span class="line">    <span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> personFirst);	<span class="comment">//true --&gt; 来自原型</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"age"</span> <span class="keyword">in</span> personSecond);	<span class="comment">//true --&gt; 来自原型</span></span><br><span class="line"></span><br><span class="line">    personFirst.name = <span class="string">"June"</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> personFirst);	<span class="comment">//true --&gt; 来自实例对象</span></span><br><span class="line"><span class="string">``</span><span class="string">`   </span><br><span class="line"></span><br><span class="line">&gt; 下面的代码用来检测属性是否存在于原型中</span><br><span class="line"></span><br><span class="line">`</span><span class="string">``</span>JavaScript</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hasPrototypeProperty</span>(<span class="params">obj, name</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> !obj.hasOwnProperty(name) &amp;&amp; (name <span class="keyword">in</span> obj);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原型的字面量写法<ol>
+<li>上面使用Person.prototype.xxx的方法书写原型，每次需要添加属性的时候都要重复书写前面部分的代码。对于这种情况，我们可以使用原型的字面量来创建原型对象。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">	name: <span class="string">"Louis"</span>,</span><br><span class="line">	age : <span class="number">23</span>,</span><br><span class="line">	job : <span class="string">"Student"</span>,</span><br><span class="line">	sayName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用原型字面量有一点需要注意的是，原型对象的constructor属性不再指向原来的构造函数Person();<br>这是因为使用Person.prototype = {}创建原型，相当于Person.prototype是Object的实例，而实例中存在的[[prototype]]指向的是Object的原型，原型中的constructor属性指向的就是Object对象，所以如果constructor属性很重要，则需要在创建原型的字面量上重新指定，如：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">	constructor : Person,</span><br><span class="line">	name: <span class="string">"Louis"</span>,</span><br><span class="line">	age : <span class="number">23</span>,</span><br><span class="line">	job : <span class="string">"Student"</span>,</span><br><span class="line">	sayName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原型的动态性<ol>
+<li>原型的动态性体现在只要对原型对象所做的任何修改都能够立即从实例上得到反映。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> friend = <span class="keyword">new</span> Person();</span><br><span class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"halo Louis"</span>);</span><br><span class="line">&#125;</span><br><span class="line">friend.sayHi();		<span class="comment">//打印： halo Louis</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，给原型添加属性和方法都能够在实例上得到反映，但是如果重新改写原型，则会切断实例和原型之间最初的关系。<br>需要谨记的是：实例中的指针仅仅指向原型，而不是指向构造函数<br>重写原型之后构造函数、对象实例、原型之间的关系如下图：</p>
+</blockquote>
+<p><img src="http://123.56.156.116/Louis/prototype/prototypeSecond.png" alt="重写原型之后构造函数、对象实例、原型之间的关系"></p>
+<ul>
+<li>原型的弊端<br>1.原型的弊端也是显而易见的，对于数值型属性而言，每一个属性也都是共享的。对于所创建的每一个实例都具有相同的属性值，其实也不合理。应该是数值型属性为各自所有，而方法属性则可以进行共享，所以一般在创建构造函数的时候都是使用构造函数模式和原型模式相结合进行，如：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//属性私有</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age, job</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.job = job;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方法共有</span></span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> personFirst = <span class="keyword">new</span> Person(<span class="string">"June"</span>, <span class="number">21</span>, <span class="string">"Student"</span>);</span><br><span class="line"><span class="keyword">var</span> personSecond = <span class="keyword">new</span> Person(<span class="string">"Louis"</span>, <span class="number">23</span>, <span class="string">"Student"</span>);</span><br><span class="line">personFirst.sayName(); 	<span class="comment">//打印： June</span></span><br><span class="line">personSecond.sayName();	<span class="comment">//打印： Louis</span></span><br></pre></td></tr></table></figure>
+<h3 id="参考文章">参考文章</h3><blockquote>
+<p>[1]<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain</a><br>[2]<a href="http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/" target="_blank" rel="external">http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/</a><br>[3]<a href="http://blog.vjeux.com/2011/javascript/how-prototypal-inheritance-really-works.html" target="_blank" rel="external">http://blog.vjeux.com/2011/javascript/how-prototypal-inheritance-really-works.html</a><br>[4]<a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html</a><br>[5]JavaScript高级程序设计(3nd Edition)第六章</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/11/23/浏览器判断/" itemprop="url">
+                  浏览器判断
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-11-23T09:37:04+08:00" content="2015-11-23">
+              2015-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/CodeSegment/" itemprop="url" rel="index">
+                    <span itemprop="name">CodeSegment</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="判断浏览器">判断浏览器</h1><h3 id="IE浏览器的判断">IE浏览器的判断</h3><ul>
+<li><p>总体判断IE</p>
+<blockquote>
+<p>var IE = !!window.ActiveXObject || “ActiveXObject” in window (判断包括IE11)。</p>
+</blockquote>
+</li>
+<li><p>分别判断IE6,IE7,IE8</p>
+<blockquote>
+<p>var appVersion,<br>   isIE6,<br>   isIE7,<br>   isIE8;<br>if( navigator.appName === “Microsoft Internet Explorer” ){<br>  appVersion = navigator.appVersion.split(“;”)[1].replace(/[ ]/g, “”);<br>  isIE6 = appVersion === “MSIE6.0”;<br>  isIE7 = appVersion === “MSIE7.0”;<br>  isIE8 = appVersion === “MSIE8.0”;<br>}   </p>
+</blockquote>
+</li>
+</ul>
+<h3 id="火狐浏览器的判断">火狐浏览器的判断</h3><blockquote>
+<p>var isFirefox = navigator.userAgent.indexOf(“Firefox”) &gt; 0;</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/11/23/DOM事件系列-5/" itemprop="url">
+                  DOM事件系列[5]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-11-23T08:36:49+08:00" content="2015-11-23">
+              2015-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[5]跨浏览器中事件">[5]跨浏览器中事件</h1><ol>
+<li>做前端兼容性是个躲不开的话题，当你写出来的代码兼容性越强说明你的功底越深。所以在这里探讨下事件event的兼容性问题。event兼容性问题主要是IE浏览器与其他浏览器事件处理的区别，有如下几个方面需要了解：  </li>
+</ol>
+<blockquote>
+<ol>
+<li>IE事件模型  </li>
+<li>事件的兼容性写法  </li>
+</ol>
+</blockquote>
+<h3 id="IE事件模型">IE事件模型</h3><ol>
+<li>IE支持的事件是中间模型，这个模型有区别与DOM Level 0 Events和DOM Level 2 Events。IE事件模型包括Event对象，但event并不会传递给事件句柄函数，而是作为Window对象的属性。另外IE事件模型不支持捕获形式Capturing的事件传播形式，只支持冒泡Bubbling事件传播。</li>
+</ol>
+<ul>
+<li>IE Event对象  </li>
+</ul>
+<blockquote>
+<p>属性如下：  </p>
+<ol>
+<li>type(String)，声明事件的类型。该属性的值是删除前缀on的事件名称，如click、mouseover；与DOM Event对象的type属性兼容。  </li>
+<li>srcElement(node), 发生事件的文档元素。与DOM Event对象的target属性兼容。  </li>
+<li>cancelBubble(boolean), IE Event对象没有stopPropagation()函数，所以如果需要阻止事件冒泡则需要通过设置cancelBubble的值，为true的时候表示阻止当前事件冒泡。  </li>
+<li>returnValue(boolean), IE Event对象没有preventDefault()函数，所以如果需要阻止浏览器的默认行为则需要通过设置returnValue的值，为false的时候表示阻止当前标签的浏览器默认行为。  </li>
+</ol>
+</blockquote>
+<ul>
+<li>IE事件句柄的注册  </li>
+</ul>
+<ol>
+<li>IE事件的注册是通过使用attachEvent()方法和detachEvent()方法，与DOM Event中的addEventListener()和removeEventListener()类似，但是以下几点不同：  </li>
+</ol>
+<blockquote>
+<ol>
+<li>由于IE事件模型只支持事件的冒泡传播方式，因此attachEvent()方法和detachEvent()方法都只有两个参数，分别是事件类型和句柄函数。  </li>
+<li>传递给IE方法的事件类型与DOM Event中有所区别，DOM Event使用的时候不需要带前缀on，而IE Event则需要。比如说对于点击事件，在DOM Event事件中则是用click进行绑定，而在IE Event则需要使用onclick绑定。  </li>
+<li>用attachEvent()注册的函数将被作为全局函数调用，而不是作为发生事件的文档元素的方法。也就是说，在attachEvent()注册的时间句柄执行时，关键字this引用的是window对象，而不是事件的目标元素。<br>4.attachEvent()允许同一事件句柄函数注册多次。当指定类型的一个事件发生的时候，注册函数被调用的次数和它被注册的次数一样多。  </li>
+</ol>
+</blockquote>
+<h3 id="事件的兼容性写法">事件的兼容性写法</h3><ul>
+<li><p>获取event对象</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> event = event || <span class="built_in">window</span>.event;</span><br></pre></td></tr></table></figure>
+<p>  或者写成:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> event;</span><br><span class="line"><span class="keyword">if</span>(event)&#123;</span><br><span class="line">	event = <span class="built_in">window</span>.event;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取事件发生的文档元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _srcElemtn = event.target || event.srcElement</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>阻止当前事件冒泡</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(event.stopPropagation)&#123;</span><br><span class="line">	event.stopPropagation();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	event.cancelBubble = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>阻止浏览器的默认行为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(event.preventDefault)&#123;</span><br><span class="line">	event.preventDefault();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	event.returnValue = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/11/23/DOM事件系列-4/" itemprop="url">
+                  DOM事件系列[4]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-11-23T08:36:36+08:00" content="2015-11-23">
+              2015-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="[4]阻止浏览器默认事件行为">[4]阻止浏览器默认事件行为</h1><ol>
+<li>首先我们来说说什么是浏览器的默认行为，比如对于一个html的a标签，浏览器的处理都是链接跳转。如果我们不想点击a标签的时候，浏览器进行页面跳转，这时候就需要阻止浏览器的跳转行为，而这个跳转行为就是浏览器默认的处理方式，也就是默认事件行为。   </li>
+<li><p>前面说到阻止浏览器的默认行为我们可以使用event.preventDefault()。但是很多时候，我们会看到代码中也有使用return false来阻止浏览器的默认行为。这小节主要就是来探讨使用event.preventDefault()和使用return false之间的区别。  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">'toggle'</span>&gt;</span>Click Me!<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">'mydiv'</span>&gt;</span>MyDiv<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'a.toggle'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	$(<span class="string">'#mydiv'</span>).toggle();</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="http://jsbin.com/wiwovuh/1/edit?html,css,js,output" target="_blank" rel="external">案例查看</a>  </p>
+<ol>
+<li>通过上面的例子，我们可以看到在点击a标签的时候并没有发生浏览器页面跳转行为。当我们把JavaScript代码中的return false注释掉之后，再次点击a标签会发现浏览器进行了页面跳转。所以可以看到return false确实是可以用来阻止浏览器的默认行为。  </li>
+<li>我们将上面的return false换成event.preventDefault()，可以看到同样能阻止浏览器页面的跳转。<a href="http://jsbin.com/famelo/1/edit?html,js,output" target="_blank" rel="external">案例查看</a><br>3.既然return false 和 event.preventDefault()  都能阻止浏览器的默认行为，那是不是随便用哪个都OK呢？显然不是的，下面就来说说两者之间的差别。  </li>
+</ol>
+</li>
+</ol>
+<h3 id="Return_false_VS-_event-preventDefault()">Return false VS. event.preventDefault()</h3><ol>
+<li>使用return false来取消浏览器默认行为的时候，其背后做了两件事情。分别是：  </li>
+</ol>
+<blockquote>
+<p>event.preventDefault()<br>event.stopPropagation()<br>什么鬼！？不要惊讶，就是酱紫。return false不禁阻止了浏览器的默认行为，而且还阻止了事件冒泡。具体<a href="http://jsfiddle.net/Louis_Tsang/jmajxyL5/3/" target="_blank" rel="external">Show by code!</a>  </p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://www.scholat.com/zengweiquan"</span>&gt;</span>My Page<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">        Teaser text...</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"https://github.com/ScholatLouis"</span>&gt;</span>My Other Page<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">        Teaser text...</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $(<span class="string">"div.post h2 a"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    	<span class="keyword">var</span> event = event || <span class="built_in">window</span>.event;</span><br><span class="line">      	<span class="keyword">var</span> a = $(<span class="keyword">this</span>),</span><br><span class="line">          	href = a.attr(<span class="string">'href'</span>), </span><br><span class="line">          	content  = a.parent().next();</span><br><span class="line">      	content.html(href + <span class="string">" #content"</span>);</span><br><span class="line">      	<span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">   	&#125;);  </span><br><span class="line"></span><br><span class="line">   	<span class="keyword">var</span> posts = $(<span class="string">"div.post"</span>);</span><br><span class="line">  	posts.click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   		alert(<span class="string">"posts click!"</span>);</span><br><span class="line">   	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从代码中可以看出，使用return false之后，点击a标签并不会有弹框：posts click！出现。如果我们把return   false换成event.preventDefault()之后，就可以看到posts click!的出现。<a href="http://jsfiddle.net/Louis_Tsang/jmajxyL5/4/" target="_blank" rel="external">案例查看</a><br>原因分析：    </p>
+<ol>
+<li>首先posts click!弹框是绑定在a标签的父元素div上。正常情况下，当a标签发生点击事件的时候，事件会向上冒泡，div绑定的click事件监测到点击事件的发生，则执行代码：alert(“posts click!”)，于是出现了弹框。    </li>
+<li>使用return false之后，因为其背后执行了event.preventDefault(); event.stopPrapagation();这句代码，第一句首先是阻止了页面的跳转，所以我们可以看到点击a标签之后并没有发生页面跳转；第二句则是阻止点击事件向上冒泡，从而使得a标签的父元素div没能检测到click事件的发生，因此没有弹框posts click!的发生。  </li>
+</ol>
+<p>结论：  </p>
+<ol>
+<li>如果我们只是单纯需要阻止浏览器的默认行为，则应该使用event.preventDefault()而不要使用return false。  </li>
+</ol>
+</blockquote>
+<h3 id="stopProgapation()_VS-_stopImmediatePropagation()">stopProgapation() VS. stopImmediatePropagation()</h3><ol>
+<li>在阻止事件冒泡JavaScript也提供了两个事件函数，分别是stopProgapation()和stopImmediatePropagation()。这一部分，我们来说下这两个时间函数的区别。  </li>
+</ol>
+<blockquote>
+<p>stopProgapation()函数：  </p>
+<ol>
+<li>阻止当前事件向上传播，但是不影响当前元素所绑定的其他事件的执行。<br>stopImmediatePropagation()函数：  </li>
+<li>阻止当前事件向上传播，同时当前元素绑定的相同事件都将不再执行，不会影响不同事件的执行。<a href="http://jsfiddle.net/Louis_Tsang/jmajxyL5/7/" target="_blank" rel="external">案例查看</a>  </li>
+</ol>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"http://www.scholat.com/zengweiquan"</span>&gt;</span>My Page<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">        Teaser text...</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"https://github.com/ScholatLouis"</span>&gt;</span>My Other Page<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content"</span>&gt;</span></span><br><span class="line">        Teaser text...</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   $(<span class="string">"div.post h2 a"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> event = event || <span class="built_in">window</span>.event;</span><br><span class="line">      <span class="keyword">var</span> a = $(<span class="keyword">this</span>),</span><br><span class="line">          href = a.attr(<span class="string">'href'</span>), </span><br><span class="line">          content  = a.parent().next();</span><br><span class="line">      content.html(href + <span class="string">" #content"</span>);</span><br><span class="line">      event.preventDefault();</span><br><span class="line">      event.stopPropagation(); </span><br><span class="line">   &#125;);    </span><br><span class="line">   $(<span class="string">"div.post h2 a"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">   		<span class="keyword">var</span> event = event || <span class="built_in">window</span>.event;</span><br><span class="line">        alert(<span class="string">"stopPropagation()"</span>);</span><br><span class="line">   &#125;);    </span><br><span class="line">    <span class="keyword">var</span> posts = $(<span class="string">"div.post"</span>);</span><br><span class="line">	posts.click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">"posts click!"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ol>
+<li>从上面的代码可以看到a标签绑定了两个click事件，第二个是一个弹框，内容为：stopPropagation()  。执行代码可以看到确实是会有弹框，且弹框内容为：stopPropagation()。<a href="http://jsfiddle.net/Louis_Tsang/jmajxyL5/5/" target="_blank" rel="external">案例查看</a>  </li>
+<li>我们将上面的代码做出如下修改，将event.stopPropagation()改成event.stopImmediatePropagation()。<a href="http://jsfiddle.net/Louis_Tsang/jmajxyL5/6/" target="_blank" rel="external">案例查看</a>。修改之后的代码执行，不再有弹框出现。  </li>
+</ol>
 </blockquote>
 
             
